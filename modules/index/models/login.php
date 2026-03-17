@@ -100,4 +100,18 @@ class Model extends \Kotchasan\KBase
             }
         }
     }
+
+    /**
+     * คืนค่าฟอร์มเข้าระบบสำหรับ Modal
+     *
+     * @param Request $request
+     */
+    public function showModal(Request $request)
+    {
+        if ($request->initSession()) {
+            \Kotchasan\Template::init(self::$cfg->skin);
+            $modal = \Index\Welcome\View::login($request);
+            echo json_encode(['modal' => \Kotchasan\Language::trans($modal->detail)]);
+        }
+    }
 }
