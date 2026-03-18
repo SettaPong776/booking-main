@@ -27,6 +27,19 @@
   --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.08), 0 10px 10px -5px rgba(0,0,0,0.03);
   --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --card-border-radius: var(--radius-md);
+
+  /* ── Override GCSS button color palette → refined professional tones ── */
+  --rosy:   #1e3a5f;  /* was #D50000 (bright red)  — replaces for .button.go */
+  --blue:   #2563eb;  /* was #007bff               — richer navy blue */
+  --green:  #059669;  /* was #4CAF50               — deeper teal-green */
+  --orange: #d97706;  /* was #FD7E14               — warm amber */
+  --red:    #dc2626;  /* was #DC3545               — consistent red */
+  --cyan:   #0891b2;  /* was #17A2B8               — deeper teal */
+  --gold:   #ca8a04;  /* was #FFC107               — deeper gold */
+  --purple: #6d28d9;  /* was #6F42C1               — deeper violet */
+
+  /* ── Override GCSS button shape — no full circles by default ── */
+  --button-border-radius: 8px;  /* was 5px in gcss, override circle behavior */
 }
 
 /* ── Base & Typography ──────────────────────────────── */
@@ -1473,34 +1486,249 @@ main > section {
   letter-spacing: 0.02em;
 }
 
-/* Styled buttons (all) */
+/* ══════════════════════════════════════════════════════
+   UNIFIED BUTTON SYSTEM — Professional & Consistent
+   ══════════════════════════════════════════════════════ */
+
+/* Base button for ALL .button elements */
 .button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
   border-radius: var(--radius-sm) !important;
-  font-weight: 500;
-  transition: all var(--transition) !important;
-  padding: 6px 14px !important;
+  font-family: 'Sarabun', 'THSarabunNew', Tahoma, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.01em !important;
+  padding: 7px 16px !important;
+  min-height: 36px !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: transparent !important;
+  transition: background var(--transition), box-shadow var(--transition), transform var(--transition) !important;
+  vertical-align: middle !important;
 }
 
 .button:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* Float action button */
-.float_button {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
-  border-radius: 50px !important;
-  box-shadow: 0 4px 16px rgba(30, 58, 95, 0.4);
+.button:active {
+  transform: translateY(0) !important;
+  box-shadow: none !important;
+}
+
+/* Icon before text inside buttons — ensure consistent sizing */
+.button[class*="icon-"]::before {
+  font-size: 1em !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  flex-shrink: 0;
+}
+
+/* ── Button color variants — refined palette ──────── */
+
+/* Blue (primary action) */
+.button.blue {
+  background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
   color: #ffffff !important;
-  font-weight: 600;
-  padding: 12px 24px !important;
+  border-color: transparent !important;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.30) !important;
+}
+.button.blue:hover {
+  background: linear-gradient(135deg, #1d4ed8, #2563eb) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.40) !important;
+  color: #ffffff !important;
+}
+
+/* Green (confirm / edit) */
+.button.green {
+  background: linear-gradient(135deg, #059669, #10b981) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.28) !important;
+}
+.button.green:hover {
+  background: linear-gradient(135deg, #047857, #059669) !important;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.38) !important;
+  color: #ffffff !important;
+}
+
+/* Red (delete / danger) */
+.button.red {
+  background: linear-gradient(135deg, #dc2626, #ef4444) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.28) !important;
+}
+.button.red:hover {
+  background: linear-gradient(135deg, #b91c1c, #dc2626) !important;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.38) !important;
+  color: #ffffff !important;
+}
+
+/* Orange (warning / cancel) */
+.button.orange {
+  background: linear-gradient(135deg, #d97706, #f59e0b) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 2px 6px rgba(217, 119, 6, 0.28) !important;
+}
+.button.orange:hover {
+  background: linear-gradient(135deg, #b45309, #d97706) !important;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.38) !important;
+  color: #ffffff !important;
+}
+
+/* Gray (neutral) */
+.button.gray {
+  background: linear-gradient(135deg, #4b5563, #6b7280) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 2px 6px rgba(75, 85, 99, 0.25) !important;
+}
+.button.gray:hover {
+  background: linear-gradient(135deg, #374151, #4b5563) !important;
+  color: #ffffff !important;
+}
+
+/* Save (primary submit) */
+.button.save {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 2px 8px rgba(30, 58, 95, 0.32) !important;
+}
+.button.save:hover {
+  background: linear-gradient(135deg, var(--primary-light), #3d6a9e) !important;
+  box-shadow: 0 4px 14px rgba(30, 58, 95, 0.40) !important;
+  color: #ffffff !important;
+}
+
+/* Large modifier */
+.button.large {
+  padding: 10px 24px !important;
+  font-size: 0.95rem !important;
+  min-height: 42px !important;
+}
+
+/* Small modifier */
+.button.small {
+  padding: 4px 10px !important;
+  font-size: 0.8rem !important;
+  min-height: 28px !important;
+}
+
+/* ── Search fieldset "Go" button ─────────────────────── */
+fieldset.search input[type="submit"],
+fieldset.search button[type="submit"] {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 0 16px !important;
+  height: 36px !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  font-family: 'Sarabun', 'THSarabunNew', Tahoma, sans-serif !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  box-shadow: 0 2px 6px rgba(30, 58, 95, 0.28) !important;
+  transition: all var(--transition) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+fieldset.search input[type="submit"]:hover,
+fieldset.search button[type="submit"]:hover {
+  background: linear-gradient(135deg, var(--primary-light), #3d6a9e) !important;
+  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.38) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ── DataTable "Bulk Action" / "ทำกับที่เลือก" button ── */
+.datatable .action,
+.datatable select + input[type="submit"],
+.datatable .action input[type="submit"],
+.datatable .action button,
+fieldset.action input[type="submit"],
+fieldset.action button {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 0 14px !important;
+  height: 36px !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  font-family: 'Sarabun', 'THSarabunNew', Tahoma, sans-serif !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  box-shadow: 0 2px 6px rgba(30, 58, 95, 0.25) !important;
+  transition: all var(--transition) !important;
+}
+
+fieldset.action select {
+  height: 36px !important;
+  border-radius: var(--radius-sm) !important;
+  border: 1.5px solid var(--border-medium) !important;
+  padding: 0 10px !important;
+  font-size: 0.875rem !important;
+  color: var(--text-primary) !important;
+  background-color: var(--surface) !important;
+}
+
+/* ── Filter bar inputs/selects ────────────────────────── */
+fieldset.search {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 10px 12px !important;
+  background: var(--surface-2) !important;
+  border-radius: var(--radius-sm) !important;
+  border: 1px solid var(--border-subtle) !important;
+  margin-bottom: 12px !important;
+}
+
+fieldset.search .g-input,
+fieldset.search select,
+fieldset.search input[type="text"],
+fieldset.search input[type="date"] {
+  min-width: 120px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  font-size: 0.875rem !important;
+  border-radius: var(--radius-sm) !important;
+  border: 1.5px solid var(--border-medium) !important;
+}
+
+/* ── Float / FAB button ────────────────────────────────── */
+.float_button {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%) !important;
+  border-radius: 50px !important;
+  box-shadow: 0 4px 16px rgba(30, 58, 95, 0.35) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  padding: 11px 22px !important;
+  min-height: 42px !important;
+  letter-spacing: 0.02em !important;
   transition: all var(--transition) !important;
 }
 
 .float_button:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(30, 58, 95, 0.5);
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 8px 24px rgba(30, 58, 95, 0.45) !important;
+  color: #ffffff !important;
 }
+
 
 /* Calendar styling - enhanced by module/booking/style.css */
 #booking-calendar {
@@ -1539,4 +1767,306 @@ main > section {
   border-radius: 50%;
   display: inline-block;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* ══════════════════════════════════════════════════════
+   BOOKING PAGE — Action Buttons (Book / Detail)
+   ══════════════════════════════════════════════════════ */
+
+/* Override GCSS raw color vars with refined versions for room-listing buttons */
+:root {
+  --blue:   #2563eb; /* was #007bff — more premium navy blue */
+  --orange: #d97706; /* was #FD7E14 — warmer amber instead of loud orange */
+  --green:  #059669; /* was #4CAF50 — deeper teal-green */
+  --red:    #dc2626; /* was #DC3545 — consistent with button system */
+}
+
+/* Room listing buttons — จองห้อง (blue) / รายละเอียด (amber) */
+.button.icon-calendar {
+  background: linear-gradient(135deg, #1e3a5f, #2d5483) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 2px 6px rgba(30, 58, 95, 0.30) !important;
+  padding: 7px 14px !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  min-height: 36px !important;
+}
+
+.button.icon-calendar:hover {
+  background: linear-gradient(135deg, #2d5483, #3d6a9e) !important;
+  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.40) !important;
+  color: #ffffff !important;
+}
+
+.button.icon-info {
+  background: linear-gradient(135deg, #0369a1, #0ea5e9) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 2px 6px rgba(3, 105, 161, 0.28) !important;
+  padding: 7px 14px !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  min-height: 36px !important;
+}
+
+.button.icon-info:hover {
+  background: linear-gradient(135deg, #075985, #0369a1) !important;
+  box-shadow: 0 4px 12px rgba(3, 105, 161, 0.38) !important;
+  color: #ffffff !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   TYPOGRAPHY & TEXT ALIGNMENT STANDARDS
+   ══════════════════════════════════════════════════════ */
+
+/* Section page titles — consistent h2 sizing */
+section > header h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+  padding: 0;
+}
+
+section > header h2::before {
+  font-size: 1.1em;
+  color: var(--accent);
+  line-height: 1;
+}
+
+/* Table column text alignment — prevent overflow misalignment */
+.tablebody tbody td,
+.tablebody tbody th {
+  vertical-align: middle;
+}
+
+.tablebody tbody td .button {
+  margin: 1px 2px;
+}
+
+/* Form labels — consistent vertical rhythm */
+.g-input > label,
+fieldset label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+/* DataTable toolbar — align filter row items cleanly */
+.datatable > .tablebody,
+.datatable > fieldset.search {
+  overflow-x: auto;
+}
+
+/* Pagination consistency */
+.g-pagination a,
+.g-pagination span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0 6px;
+  transition: all var(--transition);
+}
+
+.g-pagination a:hover {
+  background: var(--surface-3);
+  color: var(--primary);
+}
+
+.g-pagination .select,
+.g-pagination .current {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #ffffff;
+  border-color: transparent;
+}
+
+/* ══════════════════════════════════════════════════════
+   GO BUTTON & TABLE NAV — Unified Fix
+   ══════════════════════════════════════════════════════ */
+
+/* Override "Go" button — remove circle/red, make it professional */
+.button.go,
+.button.go.circle,
+button.go.circle,
+button.go {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: var(--radius-sm) !important; /* rectangular not circle */
+  padding: 0 18px !important;
+  height: 36px !important;
+  min-width: 60px !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 6px rgba(30, 58, 95, 0.28) !important;
+  transition: all var(--transition) !important;
+  white-space: nowrap !important;
+  letter-spacing: 0.02em !important;
+}
+
+.button.go:hover,
+.button.go.circle:hover,
+button.go:hover {
+  background: linear-gradient(135deg, var(--primary-light), #3d6a9e) !important;
+  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.38) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Table nav action bar (ทำกับที่เลือก row) */
+.table_nav.action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 4px;
+  flex-wrap: wrap;
+}
+
+.table_nav.action > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.table_nav.action select {
+  height: 36px !important;
+  border-radius: var(--radius-sm) !important;
+  border: 1.5px solid var(--border-medium) !important;
+  padding: 0 10px !important;
+  font-size: 0.875rem !important;
+  color: var(--text-primary) !important;
+  background-color: var(--surface) !important;
+  min-width: 140px !important;
+}
+
+.table_nav.action input[type="submit"],
+.table_nav.action button[type="submit"],
+.table_nav.action button:not(.float_button) {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 0 16px !important;
+  height: 36px !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  font-family: 'Sarabun', 'THSarabunNew', Tahoma, sans-serif !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  box-shadow: 0 2px 6px rgba(30, 58, 95, 0.25) !important;
+  transition: all var(--transition) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+/* Calendar nav « » — styled as button pills (they are <a> text links in the DOM) */
+.event-calendar nav a.prev,
+.event-calendar nav a.next {
+  /* Override the text color so « » are white like rest of nav */
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+/* Splitpage / pagination links */
+.splitpage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 4px 4px;
+  flex-wrap: wrap;
+}
+
+.splitpage a,
+.splitpage span {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  border-radius: var(--radius-sm) !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  padding: 0 6px !important;
+  transition: all var(--transition) !important;
+  border: 1px solid var(--border-subtle) !important;
+  color: var(--text-secondary) !important;
+  background: var(--surface) !important;
+  text-decoration: none !important;
+}
+
+.splitpage a:hover {
+  background: var(--surface-3) !important;
+  color: var(--primary) !important;
+  border-color: var(--border-medium) !important;
+}
+
+.splitpage .select,
+.splitpage .current,
+.splitpage span.select {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  font-weight: 700 !important;
+}
+
+/* table_nav form (top filter bar) */
+.table_nav form,
+form.table_nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+}
+
+form.table_nav > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+form.table_nav fieldset {
+  display: flex;
+  align-items: center;
+  border: none !important;
+  padding: 0 !important;
+  gap: 6px !important;
+}
+
+form.table_nav select,
+form.table_nav input[type="text"] {
+  height: 36px !important;
+  line-height: 36px !important;
+  font-size: 0.875rem !important;
+  border-radius: var(--radius-sm) !important;
+  border: 1.5px solid var(--border-medium) !important;
+  padding: 0 10px !important;
+  background: var(--surface) !important;
+  color: var(--text-primary) !important;
+}
+
+form.table_nav label {
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: var(--text-secondary) !important;
+  white-space: nowrap !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
 }

@@ -44,72 +44,93 @@
 /* Prev/Next arrows */
 .event-calendar nav a.prev,
 .event-calendar nav a.next {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
-  border: 1px solid rgba(255,255,255,0.2);
-  cursor: pointer;
-  transition: background 0.18s ease, transform 0.15s ease;
-  flex-shrink: 0;
-  text-decoration: none;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: var(--radius-sm, 8px) !important;
+  background: rgba(255, 255, 255, 0.14) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.22) !important;
+  cursor: pointer !important;
+  transition: background 0.18s ease, transform 0.15s ease !important;
+  flex-shrink: 0 !important;
+  text-decoration: none !important;
+  font-family: 'Sarabun', Tahoma, sans-serif !important;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
 }
 
 .event-calendar nav a.prev:hover,
 .event-calendar nav a.next:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.28) !important;
+  transform: scale(1.06) !important;
 }
 
-.event-calendar nav a.prev::before {
-  content: '‹';
-  font-size: 1.5rem;
-  line-height: 1;
-  font-weight: 300;
+/* Use text content set by the framework — fix arrow direction and size */
+.event-calendar nav a.prev::before,
+.event-calendar nav > a.prev:before {
+  content: '«' !important;
+  font-size: 1.6rem !important;
+  font-weight: 500 !important;
+  display: block !important;
+  margin-top: -4px !important;
+  margin-right: 0 !important;
 }
 
-.event-calendar nav a.next::before {
-  content: '›';
-  font-size: 1.5rem;
-  line-height: 1;
-  font-weight: 300;
+.event-calendar nav a.next::before,
+.event-calendar nav > a.next:before {
+  content: none !important; /* Clear before if any */
+}
+
+.event-calendar nav a.next::after,
+.event-calendar nav > a.next:after {
+  content: '»' !important;
+  font-size: 1.6rem !important;
+  font-weight: 500 !important;
+  display: block !important;
+  margin-top: -4px !important;
+  margin-left: 0 !important;
 }
 
 /* Month/Year label & selects */
 .event-calendar nav label.curr {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex: 1 !important;
+  justify-content: center !important;
 }
 
 .event-calendar nav label.curr select {
-  appearance: none;
-  -webkit-appearance: none;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: 600;
-  font-family: 'Sarabun', 'THSarabunNew', Tahoma, sans-serif;
-  padding: 6px 28px 6px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.18s ease;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  font-family: 'Sarabun', 'THSarabunNew', Tahoma, sans-serif !important;
+  padding: 0 30px 0 12px !important;
+  height: 36px !important;
+  line-height: 34px !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: background 0.18s ease !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 10px center !important;
+  box-sizing: border-box !important;
 }
 
 .event-calendar nav label.curr select:hover,
 .event-calendar nav label.curr select:focus {
-  background-color: rgba(255, 255, 255, 0.25);
-  outline: none;
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  outline: none !important;
 }
 
 .event-calendar nav label.curr select option {
@@ -392,17 +413,29 @@
 }
 
 .event-calendar-buttons .button {
-  font-size: 0.8rem;
-  padding: 4px 12px !important;
+  font-size: 0.8rem !important;
+  padding: 5px 14px !important;
   border-radius: 20px !important;
-  font-weight: 600;
+  font-weight: 600 !important;
+  min-height: 30px !important;
+  background: #f1f5f9 !important;
+  color: #1e3a5f !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: none !important;
   transition: all 0.18s ease !important;
 }
 
+.event-calendar-buttons .button:hover {
+  background: #e2e8f0 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
 .event-calendar-buttons .button.select {
-  background: #1e3a5f !important;
+  background: linear-gradient(135deg, #1e3a5f, #2d5483) !important;
   color: #fff !important;
-  box-shadow: 0 2px 8px rgba(30,58,95,0.3);
+  border-color: transparent !important;
+  box-shadow: 0 2px 8px rgba(30,58,95,0.3) !important;
 }
 
 /* ── Room Legend / Links ──────────────────────────────── */

@@ -69,7 +69,7 @@ class View extends \Gcms\View
             /* ปุ่มแสดงในแต่ละแถว */
             'buttons' => [
                 'booking' => [
-                    'class' => 'icon-addtocart button blue',
+                    'class' => 'icon-calendar button blue',
                     'id' => ':id',
                     'text' => '{LNG_Book a room}'
                 ],

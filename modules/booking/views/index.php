@@ -31,6 +31,10 @@ class View extends \Booking\Tools\View
      * @var array
      */
     private $rooms;
+    /**
+     * @var array
+     */
+    private $topic = [];
 
     /**
      * รายการจอง (ผู้จอง)
@@ -157,7 +161,7 @@ class View extends \Booking\Tools\View
             ],
             /* ปุ่มเพิ่ม */
             'addNew' => [
-                'class' => 'float_button icon-addtocart',
+                'class' => 'float_button icon-calendar',
                 'href' => 'index.php?module=booking-booking',
                 'title' => '{LNG_Book a room}'
             ]
