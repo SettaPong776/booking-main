@@ -99,6 +99,7 @@ class Model extends \Kotchasan\KBase
                 ];
             }
         }
+        return [];
     }
 
     /**
