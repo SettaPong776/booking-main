@@ -39,8 +39,9 @@ class Model extends \Kotchasan\KBase
             $ret = [];
             if ($login) {
                 // Login success
-                $ret['alert'] = Language::replace('Welcome %s, login complete', $login['name']);
-                $ret['url'] = $request->post('login_action')->url();
+                $msg = addslashes(Language::replace('Welcome %s, login complete', $login['name']));
+                $url = $request->post('login_action')->url();
+                $ret['eval'] = "var m = new GModal({onclose: function() { window.location = '$url'; }}); m.show('<div class=\"center\" style=\"padding: 30px;\"><h3 style=\"margin: 20px 0\">$msg</h3><button type=\"button\" class=\"button green large\" onclick=\"m.hide()\">OK</button></div>');";
                 // เคลียร์
                 $request->removeToken();
             } elseif (preg_match('/^([0-9]{10,10}):([0-9]+)$/', Login::$login_message, $match)) {
