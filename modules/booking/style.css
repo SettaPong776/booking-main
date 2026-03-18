@@ -1,28 +1,500 @@
-.calendar_links {
-  margin: 10px 0 0;
+/* ═══════════════════════════════════════════════════════
+   BOOKING MODULE — Calendar & Room Legend
+   Professional Modern Theme
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Calendar Wrapper ────────────────────────────────── */
+#booking-calendar {
+  background: transparent;
 }
-.calendar_links a {
-  color: inherit;
+
+/* ── Event Calendar Container ────────────────────────── */
+.event-calendar {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(30, 58, 95, 0.10), 0 1px 4px rgba(30,58,95,0.06);
+  overflow: hidden;
+  border: 1px solid rgba(30, 58, 95, 0.08);
+  font-family: 'Sarabun', 'THSarabunNew', Tahoma, sans-serif;
+}
+
+/* ── Calendar Nav Header ─────────────────────────────── */
+.event-calendar nav {
+  display: flex;
   align-items: center;
-  display: -webkit-box;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d5483 60%, #1e4976 100%);
+  padding: 14px 20px;
+  position: relative;
+  overflow: hidden;
 }
-.calendar_links a > span {
-  width: 1em;
-  height: 1em;
-  border-radius: 50em;
+
+.event-calendar nav::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -5%;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Prev/Next arrows */
+.event-calendar nav a.prev,
+.event-calendar nav a.next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.15s ease;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.event-calendar nav a.prev:hover,
+.event-calendar nav a.next:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.08);
+}
+
+.event-calendar nav a.prev::before {
+  content: '‹';
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.event-calendar nav a.next::before {
+  content: '›';
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: 300;
+}
+
+/* Month/Year label & selects */
+.event-calendar nav label.curr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  justify-content: center;
+}
+
+.event-calendar nav label.curr select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Sarabun', 'THSarabunNew', Tahoma, sans-serif;
+  padding: 6px 28px 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.18s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.event-calendar nav label.curr select:hover,
+.event-calendar nav label.curr select:focus {
+  background-color: rgba(255, 255, 255, 0.25);
+  outline: none;
+}
+
+.event-calendar nav label.curr select option {
+  background: #1e3a5f;
+  color: #fff;
+}
+
+/* ── Calendar Table ──────────────────────────────────── */
+.event-calendar table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* Day name headers */
+.event-calendar thead th {
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  background: #f8fafc;
+  padding: 10px 4px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+/* Sunday/Saturday color in header */
+.event-calendar thead th:first-child {
+  color: #ef4444;
+}
+.event-calendar thead th:last-child {
+  color: #3b82f6;
+}
+
+/* Day cells */
+.event-calendar tbody td {
+  border: 1px solid #f1f5f9;
+  vertical-align: top;
+  padding: 0;
+  position: relative;
+  transition: background 0.15s ease;
+  min-height: 80px;
+}
+
+.event-calendar tbody td:hover {
+  background: #f8faff !important;
+}
+
+/* Day number span */
+.event-calendar tbody td > span {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+  padding: 6px 8px 2px;
+  line-height: 1;
+  text-align: right;
+}
+
+/* Current month cells */
+.event-calendar tbody td.curr > span {
+  color: #1e3a5f;
+}
+
+/* Previous/next month cells */
+.event-calendar tbody td.ex {
+  background: #fafafa;
+}
+.event-calendar tbody td.ex > span {
+  color: #cbd5e1;
+}
+
+/* Today highlight */
+.event-calendar tbody td.today {
+  background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
+}
+
+.event-calendar tbody td.today > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: #ffffff !important;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.82rem;
+  margin: 4px 6px 2px auto;
+  padding: 0;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.4);
+}
+
+/* Holiday cells */
+.event-calendar tbody td.holiday {
+  background: #fff7ed;
+}
+
+/* Cells with events */
+.event-calendar tbody td.mark > span {
+  color: #1e3a5f;
+  font-weight: 700;
+}
+
+/* ── Event Items in Cells ────────────────────────────── */
+.event-calendar td div {
+  min-height: 4px;
+}
+
+.event-calendar td div > a {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 2px 5px;
+  margin: 1px 2px;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.12s ease;
+  text-decoration: none;
+}
+
+.event-calendar td div > a:hover {
+  opacity: 0.88;
+  transform: translateX(1px);
+}
+
+/* Event span label */
+.event-calendar td div > a span {
+  pointer-events: none;
+}
+
+/* Multi-day event continuation classes */
+.event-calendar td div > a.first {
+  border-radius: 4px 0 0 4px;
+  margin-right: 0;
+  padding-right: 2px;
+}
+.event-calendar td div > a.last {
+  border-radius: 0 4px 4px 0;
+  margin-left: 0;
+  padding-left: 2px;
+}
+.event-calendar td div > a.sub {
+  border-radius: 0;
+  margin-left: 0;
+  margin-right: 0;
+  opacity: 0.88;
+}
+
+/* Item count badge */
+.event-calendar td div address {
   display: inline-block;
-  margin-right: 10px;
+  background: #1e3a5f;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-style: normal;
+  padding: 1px 6px;
+  border-radius: 10px;
+  margin: 2px 3px 2px auto;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  line-height: 1.4;
 }
+.event-calendar td div address:hover {
+  background: #3b82f6;
+}
+
+/* Holiday label overlay */
+.event-calendar .label_holiday {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(90deg, #fbbf24, #f59e0b);
+  color: #78350f;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  line-height: 1.4;
+  border-radius: 0;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+/* ── Event Calendar Popup Modal ──────────────────────── */
+.event-calendar-modal {
+  display: none;
+  position: absolute;
+  z-index: 9999;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.10);
+  min-width: 220px;
+  max-width: 320px;
+  border: 1px solid rgba(30,58,95,0.12);
+  overflow: hidden;
+  animation: calPopIn 0.18s ease-out;
+}
+
+@keyframes calPopIn {
+  from { opacity: 0; transform: scale(0.95) translateY(-4px); }
+  to   { opacity: 1; transform: scale(1)   translateY(0); }
+}
+
+.event-calendar-modal.show {
+  display: block;
+}
+
+.event-calendar-modal h1 {
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d5483 100%);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 10px 36px 10px 14px;
+  margin: 0;
+}
+
+.event-calendar-modal .closebtn {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+.event-calendar-modal .closebtn:hover {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+.event-calendar-modal > div {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.event-calendar-modal > div > a {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.15s, transform 0.12s;
+  white-space: normal;
+  line-height: 1.4;
+}
+.event-calendar-modal > div > a:hover {
+  opacity: 0.88;
+  transform: translateX(2px);
+}
+
+/* ── Event Calendar Month Buttons ────────────────────── */
+.event-calendar-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 0 12px;
+}
+
+.event-calendar-buttons .button {
+  font-size: 0.8rem;
+  padding: 4px 12px !important;
+  border-radius: 20px !important;
+  font-weight: 600;
+  transition: all 0.18s ease !important;
+}
+
+.event-calendar-buttons .button.select {
+  background: #1e3a5f !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(30,58,95,0.3);
+}
+
+/* ── Room Legend / Links ──────────────────────────────── */
+#room_links {
+  margin: 16px 0 0;
+  padding: 12px 0 4px;
+  border-top: 1px solid rgba(30,58,95,0.08);
+}
+
+.calendar_links {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.calendar_links a.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1e3a5f;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.calendar_links a.item:hover {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #2563eb;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.18);
+  transform: translateY(-1px);
+}
+
+.calendar_links a.item > span {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  display: inline-block;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Override document-list col3 for calendar room links */
+#room_links.document-list.col3 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+#room_links.document-list.col3 > * {
+  width: auto;
+  float: none;
+}
+
+/* ── Page Section Header ─────────────────────────────── */
+.setup_frm > header h2.icon-calendar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1e3a5f;
+}
+.setup_frm > header h2.icon-calendar::before {
+  font-size: 1.2em;
+  color: #3b82f6;
+}
+
+/* ── Modal Detail (booking info popup) ───────────────── */
 .modal_detail table tbody th,
 .modal_detail table td {
   vertical-align: top;
   text-align: left;
 }
 .modal_detail table tbody th {
-  font-weight: bold;
+  font-weight: 700;
+  color: #1e3a5f;
+  padding-right: 12px;
+  white-space: nowrap;
 }
 .modal_detail .bg {
-  background-color: #f5f5f5;
+  background-color: #f8fafc;
+  border-radius: 8px;
 }
 #booking_rooms {
   background-color: #fff;
@@ -30,4 +502,20 @@
 }
 .modal_detail figure {
   margin-top: 0;
+}
+.modal_detail img {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+/* ── Status Badges ───────────────────────────────────── */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }

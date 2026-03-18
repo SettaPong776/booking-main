@@ -100,34 +100,11 @@ class View extends \Kotchasan\KBase
         $response = new \Kotchasan\Http\Response();
         $headers = [
             'Content-type' => 'text/css; charset=utf-8',
-            'Cache-Control' => 'public, max-age=604800',
-            'Expires' => gmdate('D, d M Y H:i:s', time() + 604800).' GMT',
-            'Pragma' => 'cache',
-            'Vary' => 'Accept-Encoding',
-            'Last-Modified' => gmdate('D, d M Y H:i:s').' GMT',
-            'ETag' => '"'.$etag.'"'
+            'Cache-Control' => 'no-cache, no-store, must-revalidate',
+            'Expires' => '0',
+            'Pragma' => 'no-cache',
         ];
 
-        // Check if-none-match header
-        if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']) === '"'.$etag.'"') {
-            $response->withHeaders($headers)
-                ->withStatus(304)
-                ->send();
-            exit;
-        }
-
-        // Check if-modified-since header
-        if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
-            $if_modified_since = strtotime(preg_replace('/;.*$/', '', $_SERVER['HTTP_IF_MODIFIED_SINCE']));
-            if ($if_modified_since >= time() - 604800) {
-                $response->withHeaders($headers)
-                    ->withStatus(304)
-                    ->send();
-                exit;
-            }
-        }
-
-        $headers['Last-Modified'] = gmdate('D, d M Y H:i:s').' GMT';
         $response->withHeaders($headers)
             ->withContent($compressCss)
             ->send();

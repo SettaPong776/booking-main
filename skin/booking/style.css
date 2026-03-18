@@ -1502,30 +1502,35 @@ main > section {
   box-shadow: 0 8px 24px rgba(30, 58, 95, 0.5);
 }
 
-/* Calendar styling */
+/* Calendar styling - enhanced by module/booking/style.css */
 #booking-calendar {
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  border-radius: 16px;
+  overflow: visible;
 }
 
-/* Room links styling */
+/* Room links styling - enhanced by module/booking/style.css */
 #room_links .item {
-  border-radius: var(--radius-sm);
-  padding: 6px 12px;
-  margin: 4px;
-  background: var(--surface-2);
-  border: 1px solid var(--border-subtle);
-  transition: all var(--transition);
+  border-radius: 20px;
+  padding: 6px 14px 6px 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  transition: all 0.18s ease;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #1e3a5f;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 #room_links .item:hover {
-  background: var(--primary-glow);
-  border-color: var(--primary);
-  color: var(--primary);
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #2563eb;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.18);
+  transform: translateY(-1px);
 }
 
 #room_links .item span {
@@ -1533,4 +1538,5 @@ main > section {
   height: 12px;
   border-radius: 50%;
   display: inline-block;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
