@@ -45,24 +45,13 @@ function initBookingApprove() {
   });
   var doApprove = function() {
     var id = floatval($E('id').value),
-      value = this.id.replace('change_status', ''),
-      self = this;
-    var msg = trans("YOU_WANT_TO_XXX").replace("XXX", this.innerHTML);
-    Swal.fire({
-      title: 'ยืนยัน',
-      text: msg,
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'ตกลง',
-      cancelButtonText: 'ยกเลิก'
-    }).then(function(result) {
-      if (result.isConfirmed) {
-        if (id > 0) {
-          let q = 'action=approve&id=' + id + '&status=' + value;
-          send(WEB_URL + 'index.php/booking/model/report/action', q, doFormSubmit, self)
-        }
+      value = this.id.replace('change_status', '');
+    if (confirm(trans("YOU_WANT_TO_XXX").replace("XXX", this.innerHTML))) {
+      if (id > 0) {
+        let q = 'action=approve&id=' + id + '&status=' + value;
+        send(WEB_URL + 'index.php/booking/model/report/action', q, doFormSubmit, this)
       }
-    });
+    }
   };
   callClick('change_status1', doApprove);
   callClick('change_status2', doApprove);

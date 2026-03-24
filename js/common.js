@@ -186,65 +186,45 @@ function defaultSubmit(ds) {
       }
     }
   }
-  var executePostActions = function() {
-    if (_input) {
-      _input.focus();
-      var tag = _input.tagName.toLowerCase();
-      if (tag != 'select') {
-        _input.highlight();
-      }
-      if (tag == 'input') {
-        var type = _input.get('type').toLowerCase();
-        if (type == 'text' || type == 'password') {
-          _input.select();
-        }
-      }
-    }
-    if (_eval) {
-      eval(_eval);
-    }
-    if (_location) {
-      if (_location == 'reload') {
-        if (loader) {
-          loader.reload();
-        } else {
-          window.location.reload();
-        }
-      } else if (_location == 'refresh') {
-        window.location.reload();
-      } else if (_location == 'back') {
-        if (loader) {
-          loader.back();
-        } else {
-          window.history.go(-1);
-        }
-      } else if (loader && _location != _url) {
-        loader.location(_location);
-      } else {
-        window.location = _location.replace(/&amp;/g, '&');
-      }
-    }
-  };
-
   if (_alert != '') {
-    if (typeof Swal !== 'undefined') {
-      var isError = _alert.toLowerCase().indexOf('error') !== -1 || _alert.toLowerCase().indexOf('fail') !== -1 || _alert.toLowerCase().indexOf('ไม่สำเร็จ') !== -1;
-      var isSuccess = _alert.toLowerCase().indexOf('success') !== -1 || _alert.toLowerCase().indexOf('เรียบร้อย') !== -1 || _alert.toLowerCase().indexOf('บันทึก') !== -1;
-      Swal.fire({
-        icon: isError ? 'error' : (isSuccess ? 'success' : 'info'),
-        title: 'ระบบแจ้งเตือน',
-        text: _alert,
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'ตกลง'
-      }).then(function() {
-        window.setTimeout(executePostActions, 300);
-      });
-    } else {
-      alert(_alert);
-      executePostActions();
+    alert(_alert);
+  }
+  if (_input) {
+    _input.focus();
+    var tag = _input.tagName.toLowerCase();
+    if (tag != 'select') {
+      _input.highlight();
     }
-  } else {
-    executePostActions();
+    if (tag == 'input') {
+      var type = _input.get('type').toLowerCase();
+      if (type == 'text' || type == 'password') {
+        _input.select();
+      }
+    }
+  }
+  if (_eval) {
+    eval(_eval);
+  }
+  if (_location) {
+    if (_location == 'reload') {
+      if (loader) {
+        loader.reload();
+      } else {
+        window.location.reload();
+      }
+    } else if (_location == 'refresh') {
+      window.location.reload();
+    } else if (_location == 'back') {
+      if (loader) {
+        loader.back();
+      } else {
+        window.history.go(-1);
+      }
+    } else if (loader && _location != _url) {
+      loader.location(_location);
+    } else {
+      window.location = _location.replace(/&amp;/g, '&');
+    }
   }
 }
 
@@ -280,17 +260,24 @@ function initWriteTab(id, sel) {
 }
 var dataTableActionCallback = function(xhr) {
   var el,
+    prop,
     val,
-    _alert = '',
-    _location = false,
-    _remove = [],
     ds = xhr.responseText.toJSON();
-    
   if (ds) {
-    for (var prop in ds) {
+    for (prop in ds) {
       val = ds[prop];
       if (prop == 'location') {
-        _location = val;
+        if (val == 'reload') {
+          if (loader) {
+            loader.reload();
+          } else {
+            window.location.reload();
+          }
+        } else if (val == 'refresh') {
+          window.location.reload();
+        } else {
+          window.location = val;
+        }
       } else if (prop == 'open') {
         window.setTimeout(function() {
           window.open(val.replace(/&amp;/g, '&'));
@@ -305,17 +292,17 @@ var dataTableActionCallback = function(xhr) {
           document.body.removeChild(a);
         }, 1);
       } else if (prop == 'remove') {
-        _remove.push(val);
+        if ($E(val)) {
+          $G(val).remove();
+        }
       } else if (prop == 'alert') {
-        _alert = val;
+        alert(val);
       } else if (prop == 'error') {
-        _alert = trans(val);
+        alert(trans(val));
       } else if (prop == 'elem') {
         el = $E(val);
         if (el) {
-          if (ds.class) {
-            el.className = ds.class;
-          }
+          el.className = ds.class;
           if (ds.title) {
             el.title = ds.title;
           }
@@ -335,49 +322,6 @@ var dataTableActionCallback = function(xhr) {
       } else if ($E(prop)) {
         $G(prop).setValue(val);
       }
-    }
-
-    var executeTableActions = function() {
-      for (var i = 0; i < _remove.length; i++) {
-        if ($E(_remove[i])) {
-          $G(_remove[i]).remove();
-        }
-      }
-      if (_location) {
-        if (_location == 'reload') {
-          if (loader) {
-            loader.reload();
-          } else {
-            window.location.reload();
-          }
-        } else if (_location == 'refresh') {
-          window.location.reload();
-        } else {
-          window.location = _location;
-        }
-      }
-    };
-
-    if (_alert != '') {
-      if (typeof Swal !== 'undefined') {
-        var strMsg = String(_alert);
-        var isError = strMsg.toLowerCase().indexOf('error') !== -1 || strMsg.toLowerCase().indexOf('fail') !== -1 || strMsg.toLowerCase().indexOf('ไม่สำเร็จ') !== -1;
-        var isSuccess = strMsg.toLowerCase().indexOf('success') !== -1 || strMsg.toLowerCase().indexOf('เรียบร้อย') !== -1 || strMsg.toLowerCase().indexOf('บันทึก') !== -1;
-        Swal.fire({
-          icon: isError ? 'error' : (isSuccess ? 'success' : 'info'),
-          title: 'ระบบแจ้งเตือน',
-          text: strMsg,
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'ตกลง'
-        }).then(function() {
-          window.setTimeout(executeTableActions, 300);
-        });
-      } else {
-        alert(_alert);
-        executeTableActions();
-      }
-    } else {
-      executeTableActions();
     }
   } else if (xhr.responseText != '') {
     console.log(xhr.responseText);
