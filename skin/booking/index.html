@@ -12,6 +12,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel=stylesheet href="index.php/css/view/index?{REV}">
   <script src="index.php/js/view/index/{LANGUAGE}?{REV}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    /* Fix for SweetAlert2 z-index to be on top of Kotchasan modals */
+    .swal2-container { z-index: 10000 !important; }
+  </style>
 </head>
 
 <body class="responsive {BODYCLASS}">
@@ -56,6 +61,21 @@
     $G(window).Ready(function() {
       initWeb();
     });
+    // Override window.alert globally to use SweetAlert2
+    window.alert = function(msg) {
+      if (!msg) return;
+      var strMsg = String(msg);
+      var isError = strMsg.toLowerCase().indexOf('error') !== -1 || strMsg.toLowerCase().indexOf('fail') !== -1 || strMsg.toLowerCase().indexOf('ไม่สำเร็จ') !== -1;
+      var isSuccess = strMsg.toLowerCase().indexOf('success') !== -1 || strMsg.toLowerCase().indexOf('เรียบร้อย') !== -1 || strMsg.toLowerCase().indexOf('บันทึก') !== -1;
+      
+      Swal.fire({
+        icon: isError ? 'error' : (isSuccess ? 'success' : 'info'),
+        title: 'ระบบแจ้งเตือน',
+        html: strMsg,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'ตกลง'
+      });
+    };
   </script>
 </body>
 

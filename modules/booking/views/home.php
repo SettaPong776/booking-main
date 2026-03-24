@@ -38,6 +38,17 @@ class View extends \Gcms\View
         $div = $section->add('div', [
             'class' => 'setup_frm'
         ]);
+        $fieldset = $div->add('fieldset');
+        $rooms = \Booking\Room\Model::toSelect();
+        $first_room_id = key($rooms);
+        $fieldset->add('select', [
+            'id' => 'calendar_room_id',
+            'labelClass' => 'g-input icon-office',
+            'itemClass' => 'item',
+            'label' => '{LNG_Room}',
+            'options' => $rooms,
+            'value' => $first_room_id
+        ]);
         $div->add('div', [
             'id' => 'booking-calendar'
         ]);

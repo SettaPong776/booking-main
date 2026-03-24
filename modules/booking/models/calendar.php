@@ -42,7 +42,8 @@ class Model extends \Kotchasan\Model
             $params = [
                 // วันที่เริ่มต้นและสิ้นสุดตามที่ปฏิทินแสดงผล
                 'from' => $from,
-                'to' => date('Y-m-d 23:59:59', strtotime($from.' + 41 days'))
+                'to' => date('Y-m-d 23:59:59', strtotime($from.' + 41 days')),
+                'room_id' => $request->request('room_id')->toInt()
             ];
             $events = [];
             // โหลดโมดูลที่ติดตั้งแล้ว
@@ -77,8 +78,11 @@ class Model extends \Kotchasan\Model
             ->andWhere([
                 Sql::create("V.`begin`>='$params[from]' AND V.`begin`<='$params[to]'"),
                 Sql::create("V.`end`>='$params[from]' AND V.`end`<='$params[to]'")
-            ], 'OR')
-            ->order('V.begin')
+            ], 'OR');
+        if (!empty($params['room_id'])) {
+            $query->andWhere(['V.room_id', $params['room_id']]);
+        }
+        $query->order('V.begin')
             ->cacheOn();
         foreach ($query->execute() as $item) {
             $events[] = [

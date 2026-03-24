@@ -1,9 +1,12 @@
 function initBookingCalendar(min, max) {
   var y = new Date().getFullYear();
-  new Calendar("booking-calendar", {
+  var roomSelect = $E('calendar_room_id');
+  var urlParams = (roomSelect && roomSelect.value > 0) ? '?room_id=' + roomSelect.value : '';
+  
+  var calendar = new Calendar("booking-calendar", {
     minYear: Math.min(min, y),
     maxYear: Math.max(max, y),
-    url: WEB_URL + "index.php/booking/model/calendar/toJSON",
+    url: WEB_URL + "index.php/booking/model/calendar/toJSON" + urlParams,
     onclick: function(d) {
       send(
         WEB_URL + "index.php/booking/model/index/action",
@@ -12,6 +15,16 @@ function initBookingCalendar(min, max) {
       );
     }
   });
+
+  if ($E('calendar_room_id')) {
+    $G('calendar_room_id').addEvent('change', function() {
+      if (this.value > 0) {
+        calendar.setParams('room_id=' + this.value);
+      } else {
+        calendar.setParams('');
+      }
+    });
+  }
   forEach($E('room_links').getElementsByTagName('a'), function() {
     callClick(this, function() {
       send(
@@ -32,13 +45,24 @@ function initBookingApprove() {
   });
   var doApprove = function() {
     var id = floatval($E('id').value),
-      value = this.id.replace('change_status', '');
-    if (confirm(trans("YOU_WANT_TO_XXX").replace("XXX", this.innerHTML))) {
-      if (id > 0) {
-        let q = 'action=approve&id=' + id + '&status=' + value;
-        send(WEB_URL + 'index.php/booking/model/report/action', q, doFormSubmit, this)
+      value = this.id.replace('change_status', ''),
+      self = this;
+    var msg = trans("YOU_WANT_TO_XXX").replace("XXX", this.innerHTML);
+    Swal.fire({
+      title: 'ยืนยัน',
+      text: msg,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'ตกลง',
+      cancelButtonText: 'ยกเลิก'
+    }).then(function(result) {
+      if (result.isConfirmed) {
+        if (id > 0) {
+          let q = 'action=approve&id=' + id + '&status=' + value;
+          send(WEB_URL + 'index.php/booking/model/report/action', q, doFormSubmit, self)
+        }
       }
-    }
+    });
   };
   callClick('change_status1', doApprove);
   callClick('change_status2', doApprove);

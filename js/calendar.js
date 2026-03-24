@@ -312,6 +312,7 @@ Calendar.prototype = {
             }
             self.modal.appendChild(a);
             a.onclick = function() {
+              self.modal.parentNode.removeClass('show');
               return self.onclick.call(link.datas, d);
             };
           });
