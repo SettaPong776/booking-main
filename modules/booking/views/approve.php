@@ -177,28 +177,8 @@ class View extends \Booking\Tools\View
                 'value' => isset($index->{$key}) ? $index->{$key} : ''
             ]);
         }
-        // ตัวเลือก checkbox
-        foreach (Language::get('BOOKING_OPTIONS', []) as $key => $label) {
-            if (!$category->isEmpty($key)) {
-                $fieldset->add('checkboxgroups', [
-                    'id' => $key,
-                    'labelClass' => 'g-input icon-list',
-                    'itemClass' => 'item',
-                    'label' => $label,
-                    'options' => $category->toSelect($key),
-                    'value' => isset($index->{$key}) ? explode(',', $index->{$key}) : []
-                ]);
-            }
-        }
-        // comment
-        $fieldset->add('textarea', [
-            'id' => 'comment',
-            'labelClass' => 'g-input icon-file',
-            'itemClass' => 'item',
-            'label' => '{LNG_Other}',
-            'rows' => 3,
-            'value' => $index->comment
-        ]);
+
+
         // status
         $fieldset->add('select', [
             'id' => 'status',

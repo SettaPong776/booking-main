@@ -87,21 +87,7 @@ class View extends \Gcms\View
                 $content .= '<tr><th>'.$label.'</th><td>'.$order[$key].'</td></tr>';
             }
         }
-        foreach (Language::get('BOOKING_OPTIONS', []) as $key => $label) {
-            if (!empty($order[$key])) {
-                $options = explode(',', $order[$key]);
-                $vals = [];
-                foreach ($category->toSelect($key) as $i => $v) {
-                    if (in_array($i, $options)) {
-                        $vals[] = $v;
-                    }
-                }
-                $content .= '<tr><th>'.$label.'</th><td>'.implode(', ', $vals).'</td></tr>';
-            }
-        }
-        if (!empty($order['comment'])) {
-            $content .= '<tr><th class=top>{LNG_Other}</th><td>'.nl2br($order['comment']).'</td></tr>';
-        }
+
         $content .= '<tr><th>{LNG_Status}</th><td>'.self::showStatus(Language::get('BOOKING_STATUS'), $order['status']).'</td></tr>';
         if (!empty($order['reason'])) {
             $content .= '<tr><th class=top>{LNG_Reason}</th><td>'.$order['reason'].'</td></tr>';
