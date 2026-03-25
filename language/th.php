@@ -300,7 +300,7 @@ return array(
   'ROOM_CUSTOM_TEXT' => array(
     'building' => 'อาคาร/สถานที่',
     'number' => 'เลขที่ห้อง',
-    'seats' => 'จำนวนที่นั่ง'
+    'seats' => 'ความจุ (คน)'
   ),
   'Save' => 'บันทึก',
   'Save and email completed' => 'บันทึกและส่งอีเมลเรียบร้อย',
