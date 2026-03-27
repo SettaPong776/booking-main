@@ -4,42 +4,41 @@
 
 /* ── Design Tokens ──────────────────────────────────── */
 :root {
-  --primary: #1e3a5f;
-  --primary-light: #2d5483;
-  --primary-glow: rgba(30, 58, 95, 0.15);
-  --accent: #3b82f6;
-  --accent-light: #60a5fa;
+  --primary: #6366f1;
+  --primary-light: #818cf8;
+  --primary-dark: #4f46e5;
+  --primary-glow: rgba(99, 102, 241, 0.15);
+  --accent: #8b5cf6;
+  --accent-light: #a78bfa;
   --surface: #ffffff;
   --surface-2: #f8fafc;
   --surface-3: #f1f5f9;
-  --border-subtle: rgba(30, 58, 95, 0.1);
-  --border-medium: rgba(30, 58, 95, 0.2);
-  --text-primary: #0f172a;
+  --border-subtle: rgba(99, 102, 241, 0.08);
+  --border-medium: rgba(99, 102, 241, 0.18);
+  --text-primary: #1e293b;
   --text-secondary: #475569;
   --text-muted: #94a3b8;
   --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
   --radius-xl: 24px;
-  --shadow-xs: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
-  --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
-  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.08), 0 10px 10px -5px rgba(0,0,0,0.03);
-  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-xs: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
+  --shadow-sm: 0 4px 6px -1px rgba(99,102,241,0.06), 0 2px 4px -1px rgba(0,0,0,0.04);
+  --shadow-md: 0 10px 25px -5px rgba(99,102,241,0.10), 0 4px 6px -2px rgba(0,0,0,0.04);
+  --shadow-lg: 0 20px 40px -8px rgba(99,102,241,0.12), 0 10px 10px -5px rgba(0,0,0,0.03);
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   --card-border-radius: var(--radius-md);
 
-  /* ── Override GCSS button color palette → refined professional tones ── */
-  --rosy:   #1e3a5f;  /* was #D50000 (bright red)  — replaces for .button.go */
-  --blue:   #2563eb;  /* was #007bff               — richer navy blue */
-  --green:  #059669;  /* was #4CAF50               — deeper teal-green */
-  --orange: #d97706;  /* was #FD7E14               — warm amber */
-  --red:    #dc2626;  /* was #DC3545               — consistent red */
-  --cyan:   #0891b2;  /* was #17A2B8               — deeper teal */
-  --gold:   #ca8a04;  /* was #FFC107               — deeper gold */
-  --purple: #6d28d9;  /* was #6F42C1               — deeper violet */
+  --rosy:   #6366f1;
+  --blue:   #6366f1;
+  --green:  #059669;
+  --orange: #d97706;
+  --red:    #dc2626;
+  --cyan:   #0891b2;
+  --gold:   #ca8a04;
+  --purple: #7c3aed;
 
-  /* ── Override GCSS button shape — no full circles by default ── */
-  --button-border-radius: 8px;  /* was 5px in gcss, override circle behavior */
+  --button-border-radius: 8px;
 }
 
 /* ── Base & Typography ──────────────────────────────── */
@@ -87,10 +86,12 @@ a:hover {
   color: var(--primary);
 }
 
-/* ── Page Background ────────────────────────────────── */
+/* ── Page Background with Dotted Grid ───────────────── */
 .bg_color {
-  background-color: var(--surface-3);
+  background-color: #eef1f8;
   border-color: var(--border-subtle);
+  background-image: radial-gradient(circle, #c7cbe0 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 .bg_header {
@@ -108,8 +109,8 @@ a:hover {
 
 /* ── Hero/Logo Banner ───────────────────────────────── */
 .hero-banner {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, #1e4976 100%);
-  padding: 40px 0 35px;
+  background: linear-gradient(135deg, #6366f1 0%, #818cf8 40%, #a78bfa 100%);
+  padding: 50px 0 45px;
   position: relative;
   overflow: hidden;
 }
@@ -122,7 +123,7 @@ a:hover {
   width: 600px;
   height: 600px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -134,7 +135,7 @@ a:hover {
   width: 400px;
   height: 400px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -190,19 +191,22 @@ a:hover {
   letter-spacing: 0.01em;
 }
 
-/* ── Header (Navbar) ────────────────────────────────── */
+/* ── Header (Navbar) — Glassmorphism ─────────────────── */
 header.header {
-  box-shadow: 0 2px 20px rgba(30, 58, 95, 0.18);
+  box-shadow: 0 4px 30px rgba(99, 102, 241, 0.15);
   background-color: var(--header-background-color);
   color: var(--header-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  height: 56px;
-  position: relative;
+  padding: 0 24px;
+  height: 60px;
+  position: sticky;
+  top: 0;
   z-index: 100;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
 }
 
 header.header > .header_btn_wrapper {
@@ -220,9 +224,9 @@ header.header > .header_btn_wrapper {
 /* Use line-height for vertical centering — compatible with gcss display:block */
 .topmenu > ul > li > a,
 .topmenu > ul > li > a:hover {
-  line-height: 56px;
-  padding: 0 16px;
-  font-weight: 500;
+  line-height: 60px;
+  padding: 0 18px;
+  font-weight: 600;
   font-size: 0.95rem;
   letter-spacing: 0.01em;
   transition: background-color var(--transition), color var(--transition);
@@ -234,13 +238,14 @@ header.header > .header_btn_wrapper {
 .topmenu > ul > li > .menu-arrow > span {
   padding-top: 0;
   padding-bottom: 0;
-  line-height: 56px;
+  line-height: 60px;
   vertical-align: middle;
 }
 
 .topmenu > ul > li.select > a,
 .topmenu > ul > li:hover > a {
-  background-color: rgba(255,255,255,0.12) !important;
+  background-color: rgba(255,255,255,0.15) !important;
+  border-radius: var(--radius-sm);
 }
 
 /* ── Dark Mode Toggle ───────────────────────────────── */
@@ -384,8 +389,8 @@ header.header li {
 
 /* ── Footer ─────────────────────────────────────────── */
 .footer {
-  background: linear-gradient(to right, #f8fafc, #f1f5f9);
-  border-top: 1px solid var(--border-subtle);
+  background: linear-gradient(to right, #f1f0ff, #eef1f8);
+  border-top: 1px solid rgba(99,102,241,0.08);
 }
 
 .footer p {
@@ -412,12 +417,13 @@ header.header li {
 
 main > section {
   clear: both;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   background-color: var(--surface);
-  padding: 20px 24px;
-  border-color: var(--border-subtle);
-  border-radius: var(--radius-md);
-  margin-top: 16px;
+  padding: 24px 28px;
+  border-color: transparent;
+  border-radius: var(--radius-xl);
+  margin-top: 20px;
+  border: 1px solid rgba(99,102,241,0.06);
 }
 
 .page :not(:after),
@@ -863,7 +869,7 @@ header .inline {
 }
 
 .modaldiv header {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
   color: #ffffff;
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   padding: 16px 20px;
@@ -974,7 +980,7 @@ header .inline {
 }
 
 .card:nth-child(12n+1) > .card-item {
-  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  background: linear-gradient(135deg, #6366f1, #818cf8);
 }
 .card:nth-child(12n+2) > .card-item {
   background: linear-gradient(135deg, #059669, #10b981);
@@ -1258,7 +1264,7 @@ fieldset.search input[type="submit"],
 
 /* ── Login button ───────────────────────────────────── */
 .button.login {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
   border: none;
   border-radius: var(--radius-sm);
   color: #ffffff !important;
@@ -1267,19 +1273,19 @@ fieldset.search input[type="submit"],
   letter-spacing: 0.02em;
   padding: 12px 24px;
   transition: all var(--transition);
-  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.35);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
   cursor: pointer;
 }
 
 .button.login:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(30, 58, 95, 0.4);
-  background: linear-gradient(135deg, var(--primary-light) 0%, #3d6a9e 100%);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+  background: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
 }
 
 .button.login:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(30, 58, 95, 0.3);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
 }
 
 /* ── Facebook Button ────────────────────────────────── */
@@ -1536,14 +1542,14 @@ main > section {
 
 /* Blue (primary action) */
 .button.blue {
-  background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+  background: linear-gradient(135deg, #6366f1, #818cf8) !important;
   color: #ffffff !important;
   border-color: transparent !important;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.30) !important;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.30) !important;
 }
 .button.blue:hover {
-  background: linear-gradient(135deg, #1d4ed8, #2563eb) !important;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.40) !important;
+  background: linear-gradient(135deg, #4f46e5, #6366f1) !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.40) !important;
   color: #ffffff !important;
 }
 
@@ -1600,14 +1606,14 @@ main > section {
 
 /* Save (primary submit) */
 .button.save {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+  background: linear-gradient(135deg, #6366f1, #818cf8) !important;
   color: #ffffff !important;
   border-color: transparent !important;
-  box-shadow: 0 2px 8px rgba(30, 58, 95, 0.32) !important;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.32) !important;
 }
 .button.save:hover {
-  background: linear-gradient(135deg, var(--primary-light), #3d6a9e) !important;
-  box-shadow: 0 4px 14px rgba(30, 58, 95, 0.40) !important;
+  background: linear-gradient(135deg, #818cf8, #a78bfa) !important;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.40) !important;
   color: #ffffff !important;
 }
 
@@ -1628,7 +1634,7 @@ main > section {
 /* ── Search fieldset "Go" button ─────────────────────── */
 fieldset.search input[type="submit"],
 fieldset.search button[type="submit"] {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+  background: linear-gradient(135deg, #6366f1, #818cf8) !important;
   color: #ffffff !important;
   border: none !important;
   border-radius: var(--radius-sm) !important;
@@ -1639,7 +1645,7 @@ fieldset.search button[type="submit"] {
   font-family: 'Sarabun', 'THSarabunNew', Tahoma, sans-serif !important;
   cursor: pointer !important;
   white-space: nowrap !important;
-  box-shadow: 0 2px 6px rgba(30, 58, 95, 0.28) !important;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.28) !important;
   transition: all var(--transition) !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -1647,8 +1653,8 @@ fieldset.search button[type="submit"] {
 
 fieldset.search input[type="submit"]:hover,
 fieldset.search button[type="submit"]:hover {
-  background: linear-gradient(135deg, var(--primary-light), #3d6a9e) !important;
-  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.38) !important;
+  background: linear-gradient(135deg, #818cf8, #a78bfa) !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.38) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -1659,7 +1665,7 @@ fieldset.search button[type="submit"]:hover {
 .datatable .action button,
 fieldset.action input[type="submit"],
 fieldset.action button {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+  background: linear-gradient(135deg, #6366f1, #818cf8) !important;
   color: #ffffff !important;
   border: none !important;
   border-radius: var(--radius-sm) !important;
@@ -1670,7 +1676,7 @@ fieldset.action button {
   font-family: 'Sarabun', 'THSarabunNew', Tahoma, sans-serif !important;
   cursor: pointer !important;
   white-space: nowrap !important;
-  box-shadow: 0 2px 6px rgba(30, 58, 95, 0.25) !important;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.25) !important;
   transition: all var(--transition) !important;
 }
 
@@ -1711,9 +1717,9 @@ fieldset.search input[type="date"] {
 
 /* ── Float / FAB button ────────────────────────────────── */
 .float_button {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%) !important;
+  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%) !important;
   border-radius: 50px !important;
-  box-shadow: 0 4px 16px rgba(30, 58, 95, 0.35) !important;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35) !important;
   color: #ffffff !important;
   font-weight: 700 !important;
   font-size: 0.9rem !important;
@@ -1725,7 +1731,7 @@ fieldset.search input[type="date"] {
 
 .float_button:hover {
   transform: translateY(-3px) scale(1.02) !important;
-  box-shadow: 0 8px 24px rgba(30, 58, 95, 0.45) !important;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.45) !important;
   color: #ffffff !important;
 }
 
@@ -1740,24 +1746,24 @@ fieldset.search input[type="date"] {
 #room_links .item {
   border-radius: 20px;
   padding: 6px 14px 6px 10px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: #f5f3ff;
+  border: 1px solid #e0e0ff;
   transition: all 0.18s ease;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   font-weight: 600;
   font-size: 0.85rem;
-  color: #1e3a5f;
+  color: #4f46e5;
   white-space: nowrap;
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 #room_links .item:hover {
-  background: #eff6ff;
-  border-color: #3b82f6;
-  color: #2563eb;
-  box-shadow: 0 2px 8px rgba(59,130,246,0.18);
+  background: #ede9fe;
+  border-color: #8b5cf6;
+  color: #6366f1;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.18);
   transform: translateY(-1px);
 }
 
@@ -1773,47 +1779,50 @@ fieldset.search input[type="date"] {
    BOOKING PAGE — Action Buttons (Book / Detail)
    ══════════════════════════════════════════════════════ */
 
-/* Override GCSS raw color vars with refined versions for room-listing buttons */
+/* Override GCSS raw color vars */
 :root {
-  --blue:   #2563eb; /* was #007bff — more premium navy blue */
-  --orange: #d97706; /* was #FD7E14 — warmer amber instead of loud orange */
-  --green:  #059669; /* was #4CAF50 — deeper teal-green */
-  --red:    #dc2626; /* was #DC3545 — consistent with button system */
+  --blue:   #6366f1;
+  --orange: #d97706;
+  --green:  #059669;
+  --red:    #dc2626;
 }
 
-/* Room listing buttons — จองห้อง (blue) / รายละเอียด (amber) */
+/* Room listing buttons — จองห้อง / รายละเอียด */
 .button.icon-calendar {
-  background: linear-gradient(135deg, #1e3a5f, #2d5483) !important;
+  background: linear-gradient(135deg, #6366f1, #818cf8) !important;
   color: #ffffff !important;
   border-color: transparent !important;
-  box-shadow: 0 2px 6px rgba(30, 58, 95, 0.30) !important;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.30) !important;
   padding: 7px 14px !important;
   font-size: 0.875rem !important;
   font-weight: 600 !important;
   min-height: 36px !important;
+  border-radius: 50px !important;
 }
 
 .button.icon-calendar:hover {
-  background: linear-gradient(135deg, #2d5483, #3d6a9e) !important;
-  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.40) !important;
+  background: linear-gradient(135deg, #4f46e5, #6366f1) !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.40) !important;
   color: #ffffff !important;
 }
 
 .button.icon-info {
-  background: linear-gradient(135deg, #0369a1, #0ea5e9) !important;
-  color: #ffffff !important;
-  border-color: transparent !important;
-  box-shadow: 0 2px 6px rgba(3, 105, 161, 0.28) !important;
+  background: #ffffff !important;
+  color: #6366f1 !important;
+  border: 2px solid #c7d2fe !important;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.10) !important;
   padding: 7px 14px !important;
   font-size: 0.875rem !important;
   font-weight: 600 !important;
   min-height: 36px !important;
+  border-radius: 50px !important;
 }
 
 .button.icon-info:hover {
-  background: linear-gradient(135deg, #075985, #0369a1) !important;
-  box-shadow: 0 4px 12px rgba(3, 105, 161, 0.38) !important;
-  color: #ffffff !important;
+  background: #f5f3ff !important;
+  border-color: #818cf8 !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.20) !important;
+  color: #4f46e5 !important;
 }
 
 /* ══════════════════════════════════════════════════════
@@ -1912,7 +1921,7 @@ button.go {
   align-items: center !important;
   justify-content: center !important;
   cursor: pointer !important;
-  box-shadow: 0 2px 6px rgba(30, 58, 95, 0.28) !important;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.28) !important;
   transition: all var(--transition) !important;
   white-space: nowrap !important;
   letter-spacing: 0.02em !important;
@@ -1921,8 +1930,8 @@ button.go {
 .button.go:hover,
 .button.go.circle:hover,
 button.go:hover {
-  background: linear-gradient(135deg, var(--primary-light), #3d6a9e) !important;
-  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.38) !important;
+  background: linear-gradient(135deg, #818cf8, #a78bfa) !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.38) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -1967,7 +1976,7 @@ button.go:hover {
   font-family: 'Sarabun', 'THSarabunNew', Tahoma, sans-serif !important;
   cursor: pointer !important;
   white-space: nowrap !important;
-  box-shadow: 0 2px 6px rgba(30, 58, 95, 0.25) !important;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.25) !important;
   transition: all var(--transition) !important;
   display: inline-flex !important;
   align-items: center !important;
