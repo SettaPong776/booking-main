@@ -44,6 +44,13 @@ return array(
   'Click on date to book this room' => 'คลิกเลือกวันที่เพื่อจองห้องนี้',
   'Booking date' => 'วันที่จอง',
   'Booking today' => 'การจองวันนี้',
+  'BOOKING_RADIO' => array(
+    'agency' => 'สังกัดหน่วยงาน'
+  ),
+  'AGENCY_TYPIES' => array(
+    'internal' => 'ภายใน',
+    'external' => 'ภายนอก'
+  ),
   'BOOKING_OPTIONS' => array(
     'accessories' => 'อุปกรณ์'
   ),

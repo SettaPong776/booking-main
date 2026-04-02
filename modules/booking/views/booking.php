@@ -67,16 +67,7 @@ class View extends \Booking\Tools\View
                 'value' => $index->room_id
             ]);
         }
-        // topic
-        $groups->add('text', [
-            'id' => 'topic',
-            'labelClass' => 'g-input icon-edit',
-            'itemClass' => 'width50',
-            'label' => '{LNG_Topic}',
-            'maxlength' => 150,
-            'value' => isset($index->topic) ? $index->topic : ''
-        ]);
-        $groups = $fieldset->add('groups');
+
         // attendees
         $groups->add('number', [
             'id' => 'attendees',
@@ -146,6 +137,22 @@ class View extends \Booking\Tools\View
             'value' => date('H:i', $end)
         ]);
         // ตัวเลือก select
+        $i = 0;
+        foreach (Language::get('BOOKING_RADIO', []) as $key => $label) {
+            if ($i % 2 == 0) {
+                $groups = $fieldset->add('groups');
+            }
+            $i++;
+            $options = Language::get(strtoupper($key).'_TYPIES', []);
+            $groups->add('radiogroups', [
+                'id' => $key,
+                'labelClass' => 'g-input icon-menus',
+                'itemClass' => 'width50',
+                'label' => $label,
+                'options' => $options,
+                'value' => isset($index->{$key}) ? $index->{$key} : key($options)
+            ]);
+        }
         $category = \Booking\Category\Model::init();
         $i = 0;
         foreach (Language::get('BOOKING_SELECT', []) as $key => $label) {

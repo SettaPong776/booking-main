@@ -79,7 +79,7 @@ class Model extends \Kotchasan\Model
                     ->where(['V.id', $id]);
                 $select = ['V.*', 'U.name', 'U.phone', $today];
                 $n = 1;
-                foreach (Language::get('BOOKING_SELECT', []) + Language::get('BOOKING_OPTIONS', []) as $key => $label) {
+                foreach (Language::get('BOOKING_SELECT', []) + Language::get('BOOKING_OPTIONS', []) + Language::get('BOOKING_RADIO', []) as $key => $label) {
                     $query->join('reservation_data M'.$n, 'LEFT', [['M'.$n.'.reservation_id', 'V.id'], ['M'.$n.'.name', $key]]);
                     $select[] = 'M'.$n.'.value '.$key;
                     ++$n;
@@ -109,6 +109,9 @@ class Model extends \Kotchasan\Model
                     'topic' => $request->post('topic')->topic(),
                     'comment' => $request->post('comment')->textarea()
                 ];
+                if (empty($save['topic'])) {
+                    $save['topic'] = Language::get('Booking').' '.\Gcms\Login::isMember()['name'];
+                }
                 $begin_date = $request->post('begin_date')->date();
                 $begin_time = $request->post('begin_time')->time();
                 $end_date = $request->post('end_date')->date();
@@ -135,10 +138,6 @@ class Model extends \Kotchasan\Model
                     if ($save['attendees'] == 0) {
                         // ไม่ได้กรอก attendees
                         $ret['ret_attendees'] = 'Please fill in';
-                    }
-                    if ($save['topic'] == '') {
-                        // ไม่ได้กรอก topic
-                        $ret['ret_topic'] = 'Please fill in';
                     }
                     if (empty($login['department'])) {
                         // สมาชิกไม่สังกัดแผนก
@@ -193,6 +192,13 @@ class Model extends \Kotchasan\Model
                     $datas = [];
                     // ตัวแปรสำหรับตรวจสอบการแก้ไข
                     $options_check = [];
+                    foreach (Language::get('BOOKING_RADIO', []) as $key => $label) {
+                        $options_check[] = $key;
+                        $value = $request->post($key)->topic();
+                        if (!empty($value)) {
+                            $datas[$key] = $value;
+                        }
+                    }
                     foreach (Language::get('BOOKING_SELECT', []) as $key => $label) {
                         $options_check[] = $key;
                         $value = $request->post($key)->topic();
