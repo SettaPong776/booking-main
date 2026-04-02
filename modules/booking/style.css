@@ -552,3 +552,205 @@
   font-weight: 700;
   letter-spacing: 0.02em;
 }
+
+/* ═══════════════════════════════════════════════════════
+   HOME PAGE — Room Cards Grid
+   ═══════════════════════════════════════════════════════ */
+.room-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  padding: 16px 0;
+}
+
+.room-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(30, 58, 95, 0.08), 0 1px 4px rgba(30,58,95,0.04);
+  overflow: hidden;
+  border: 1px solid rgba(30, 58, 95, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.room-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(99,102,241,0.12), 0 4px 12px rgba(30,58,95,0.08);
+}
+
+.room-card-img {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background: #f1f5f9;
+}
+
+.room-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.room-card:hover .room-card-img img {
+  transform: scale(1.05);
+}
+
+.room-card-body {
+  padding: 16px 20px 20px;
+}
+
+.room-card-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.room-color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.room-card-detail {
+  font-size: 0.88rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0 0 14px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.room-card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.room-card-actions .button {
+  font-size: 0.85rem !important;
+  padding: 8px 18px !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  transition: all 0.18s ease !important;
+}
+
+.room-book-btn {
+  text-decoration: none;
+}
+
+.room-detail-btn {
+  cursor: pointer;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ROOM CALENDAR PAGE — Per-room booking calendar
+   ═══════════════════════════════════════════════════════ */
+.room-calendar-page {
+  padding: 0;
+}
+
+.room-calendar-info {
+  display: flex;
+  gap: 24px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(30, 58, 95, 0.08);
+  overflow: hidden;
+  border: 1px solid rgba(30, 58, 95, 0.06);
+  margin-bottom: 24px;
+}
+
+.room-calendar-img {
+  flex-shrink: 0;
+  width: 280px;
+  min-height: 200px;
+  overflow: hidden;
+  background: #f1f5f9;
+}
+
+.room-calendar-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.room-calendar-detail {
+  flex: 1;
+  padding: 20px 24px 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.room-calendar-detail h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 10px 0;
+}
+
+.room-calendar-detail p {
+  font-size: 0.92rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0 0 14px 0;
+}
+
+.room-calendar-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #6366f1;
+}
+
+.room-calendar-hint .icon-info::before {
+  color: #818cf8;
+}
+
+/* Click-to-book: make empty day cells show pointer cursor */
+.room-calendar-page .event-calendar tbody td.curr {
+  cursor: pointer;
+}
+
+.room-calendar-page .event-calendar tbody td.curr:hover {
+  background: #eef2ff !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .room-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .room-calendar-info {
+    flex-direction: column;
+  }
+
+  .room-calendar-img {
+    width: 100%;
+    height: 180px;
+  }
+
+  .room-calendar-detail {
+    padding: 16px 20px;
+  }
+}

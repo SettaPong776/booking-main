@@ -41,6 +41,7 @@ return array(
   'Booking' => 'การจอง',
   'Booking are not available at select time' => 'ไม่สามารถใช้งานได้ในเวลาที่เลือก',
   'Booking calendar' => 'ปฏิทินการจอง',
+  'Click on date to book this room' => 'คลิกเลือกวันที่เพื่อจองห้องนี้',
   'Booking date' => 'วันที่จอง',
   'Booking today' => 'การจองวันนี้',
   'BOOKING_OPTIONS' => array(

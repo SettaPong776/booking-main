@@ -238,7 +238,7 @@ class QueryBuilder extends \Kotchasan\Database\Query
      * ฟังก์ชั่นประมวลผลคำสั่ง SQL ข้อมูลต้องการผลลัพท์เพียงรายการเดียว
      * คืนค่าผลลัพท์ที่พบเพียงรายการเดียว ไม่พบข้อมูลคืนค่า false
      *
-     * @param string $fields (option) รายชื่อฟิลด์ field1, field2, field3, ...
+     * @param string|array $fields (option) รายชื่อฟิลด์ field1, field2, field3, ...
      *
      * @return mixed
      */

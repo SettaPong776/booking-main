@@ -110,16 +110,6 @@ class View extends \Kotchasan\KBase
             exit;
         }
 
-        // Check if-modified-since header
-        if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
-            $if_modified_since = strtotime(preg_replace('/;.*$/', '', $_SERVER['HTTP_IF_MODIFIED_SINCE']));
-            if ($if_modified_since >= time() - 604800) {
-                $response->withHeaders($headers)
-                    ->withStatus(304)
-                    ->send();
-                exit;
-            }
-        }
 
         $headers['Last-Modified'] = gmdate('D, d M Y H:i:s').' GMT';
         $response->withHeaders($headers)
@@ -132,8 +122,6 @@ class View extends \Kotchasan\KBase
      */
     public static function compress($contents)
     {
-        $patt = ['#/\*(?:[^*]*(?:\*(?!/))*)*\*/#u', '#[\r\t]#', '#\n//.*\n#', '#;//.*\n#', '#[\n]#', '#[\s]{2,}#', '/[\s]{0,}([\+\-\*\|\&<>=;!])[\s]{0,}/'];
-        $replace = ['', '', '', ";\n", '', ' ', '\\1'];
-        return preg_replace($patt, $replace, implode("\n", $contents));
+        return implode("\n", $contents);
     }
 }

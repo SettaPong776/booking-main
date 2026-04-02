@@ -41,6 +41,12 @@ class Controller extends \Gcms\Controller
         $login = Login::isMember();
         // ตรวจสอบรายการที่เลือก
         $index = \Booking\Booking\Model::get($request->request('id')->toInt(), $request->request('room_id')->toInt(), $login);
+        // ถ้ามี begin_date จาก URL (มาจากปฏิทินรายห้อง) ให้ตั้งค่าวันเริ่มต้น
+        $begin_date = $request->request('begin_date')->date();
+        if ($index && $index->id == 0 && !empty($begin_date)) {
+            $index->begin = $begin_date.' 08:00:00';
+            $index->end = $begin_date.' 17:00:00';
+        }
         if ($index && ($login || empty(self::$cfg->booking_login_type))) {
             if (empty($login['department'])) {
                 // สมาชิกไม่สังกัดแผนก

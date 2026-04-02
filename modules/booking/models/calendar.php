@@ -29,8 +29,6 @@ class Model extends \Kotchasan\Model
      * คืนค่าข้อมูลปฏิทินเป็น JSON
      *
      * @param Request $request
-     *
-     * @return static
      */
     public function toJSON(Request $request)
     {
@@ -116,5 +114,6 @@ class Model extends \Kotchasan\Model
             }
             return Language::trans($return)."\n".Text::unhtmlspecialchars($item->topic);
         }
+        return '';
     }
 }

@@ -2,7 +2,7 @@ function initBookingCalendar(min, max) {
   var y = new Date().getFullYear();
   var roomSelect = $E('calendar_room_id');
   var urlParams = (roomSelect && roomSelect.value > 0) ? '?room_id=' + roomSelect.value : '';
-  
+
   var calendar = new Calendar("booking-calendar", {
     minYear: Math.min(min, y),
     maxYear: Math.max(max, y),
@@ -25,16 +25,59 @@ function initBookingCalendar(min, max) {
       }
     });
   }
-  forEach($E('room_links').getElementsByTagName('a'), function() {
-    callClick(this, function() {
-      send(
-        WEB_URL + "index.php/booking/model/rooms/action",
-        'action=detail&id=' + this.id.replace('room_', ''),
-        doFormSubmit,
-        this
-      );
+  if ($E('room_links')) {
+    forEach($E('room_links').getElementsByTagName('a'), function() {
+      callClick(this, function() {
+        send(
+          WEB_URL + "index.php/booking/model/rooms/action",
+          'action=detail&id=' + this.id.replace('room_', ''),
+          doFormSubmit,
+          this
+        );
+      });
     });
+  }
+}
+
+function initRoomCalendar(min, max, roomId) {
+  var y = new Date().getFullYear();
+  var calendar = new Calendar("booking-calendar", {
+    minYear: Math.min(min, y),
+    maxYear: Math.max(max, y),
+    url: WEB_URL + "index.php/booking/model/calendar/toJSON?room_id=" + roomId,
+    onclick: function(d) {
+      if (this.id && this.id.indexOf('_booking') > -1) {
+        send(
+          WEB_URL + "index.php/booking/model/index/action",
+          "action=detail&id=" + this.id,
+          doFormSubmit
+        );
+      } else {
+        window.location = WEB_URL + "index.php?module=booking-booking&room_id=" + roomId + "&begin_date=" + d;
+      }
+    },
+    onClickDay: function(d) {
+      window.location = WEB_URL + "index.php?module=booking-booking&room_id=" + roomId + "&begin_date=" + d;
+    }
   });
+}
+
+function initHomeRoomCards() {
+  var cards = document.getElementById('home_room_cards');
+  if (cards) {
+    var btns = cards.querySelectorAll('.room-detail-btn');
+    for (var i = 0; i < btns.length; i++) {
+      callClick(btns[i], function() {
+        var id = this.id.replace('room_detail_', '');
+        send(
+          WEB_URL + "index.php/booking/model/rooms/action",
+          'action=detail&id=' + id,
+          doFormSubmit,
+          this
+        );
+      });
+    }
+  }
 }
 
 function initBookingApprove() {

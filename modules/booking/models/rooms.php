@@ -55,9 +55,9 @@ class Model extends \Kotchasan\Model
                     $ret['modal'] = \Booking\Detail\View::create()->room($search);
                 }
             } elseif ($action === 'booking') {
-                $url = WEB_URL.'index.php?module=booking-booking&room_id='.$request->post('id')->toInt();
+                $url = WEB_URL.'index.php?module=booking-roomcalendar&room_id='.$request->post('id')->toInt();
                 if (Login::isMember()) {
-                    // จองห้อง
+                    // ไปหน้าปฏิทินของห้อง
                     $ret['location'] = $url;
                 } else {
                     // login

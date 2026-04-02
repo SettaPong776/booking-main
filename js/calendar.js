@@ -236,6 +236,17 @@ Calendar.prototype = {
         cls += ' today';
       }
       cell.className = cls;
+      if (typeof self.onClickDay === 'function' && tmp_month == intmonth) {
+        cell.onclick = (function(date) {
+            return function(e) {
+                // Ignore clicks on event elements themselves to prevent double firing
+                if (e.target && (e.target.tagName.toLowerCase() == 'a' || e.target.tagName.toLowerCase() == 'span' && e.target.parentNode.tagName.toLowerCase() == 'a')) {
+                    return;
+                }
+                self.onClickDay.call(this, date);
+            };
+        })(d.format('y-m-d'));
+      }
       pointer++;
     }
     this.next_day_of_calendar = new Date(tmp_year, tmp_month - 1, pointer, 0, 0, 0, 0);
