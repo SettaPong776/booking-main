@@ -57,6 +57,83 @@ class Model extends \Kotchasan\Model
     }
 
     /**
+     * คืนค่ารายการรูปภาพทั้งหมดของห้อง
+     *
+     * @param int $room_id
+     * @return array
+     */
+    public static function getRoomImages($room_id)
+    {
+        $images = [];
+        $dir = ROOT_PATH.DATA_FOLDER.'booking/';
+        $imgType = self::$cfg->stored_img_type;
+        $maxImages = 10;
+
+        // ภาพหลัก
+        if (is_file($dir.$room_id.$imgType)) {
+            $images[] = [
+                'file' => $dir.$room_id.$imgType,
+                'url' => WEB_URL.DATA_FOLDER.'booking/'.$room_id.$imgType,
+                'key' => 1
+            ];
+        }
+        // ภาพเพิ่มเติม 2-10
+        for ($i = 2; $i <= $maxImages; $i++) {
+            if (is_file($dir.$room_id.'-'.$i.$imgType)) {
+                $images[] = [
+                    'file' => $dir.$room_id.'-'.$i.$imgType,
+                    'url' => WEB_URL.DATA_FOLDER.'booking/'.$room_id.'-'.$i.$imgType,
+                    'key' => $i
+                ];
+            }
+        }
+        return $images;
+    }
+
+    /**
+     * ลบรูปภาพของห้อง
+     *
+     * @param int $room_id
+     * @param int $img_key (1 = main, 2-10 = additional)
+     */
+    public static function deleteRoomImage($room_id, $img_key)
+    {
+        $dir = ROOT_PATH.DATA_FOLDER.'booking/';
+        $imgType = self::$cfg->stored_img_type;
+        if ($img_key == 1) {
+            $file = $dir.$room_id.$imgType;
+        } else {
+            $file = $dir.$room_id.'-'.$img_key.$imgType;
+        }
+        if (is_file($file)) {
+            unlink($file);
+        }
+    }
+
+    /**
+     * ลบรูปภาพทั้งหมดของห้อง
+     *
+     * @param int $room_id
+     */
+    public static function deleteAllRoomImages($room_id)
+    {
+        $dir = ROOT_PATH.DATA_FOLDER.'booking/';
+        $imgType = self::$cfg->stored_img_type;
+        // ลบภาพหลัก
+        $file = $dir.$room_id.$imgType;
+        if (is_file($file)) {
+            unlink($file);
+        }
+        // ลบภาพเพิ่มเติม
+        for ($i = 2; $i <= 10; $i++) {
+            $file = $dir.$room_id.'-'.$i.$imgType;
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+    }
+
+    /**
      * บันทึกข้อมูลที่ส่งมาจากฟอร์ม (write.php)
      *
      * @param Request $request
@@ -80,7 +157,7 @@ class Model extends \Kotchasan\Model
                     }
                     $id = $request->post('id')->toInt();
                     // ตรวจสอบรายการที่เลือก
-                    $index = self::get($id, $id == 0);
+                    $index = self::get($id);
                     if ($index) {
                         if ($save['name'] == '') {
                             // ไม่ได้กรอก name
@@ -97,7 +174,13 @@ class Model extends \Kotchasan\Model
                             }
                             // ไดเร็คทอรี่เก็บไฟล์
                             $dir = ROOT_PATH.DATA_FOLDER.'booking/';
-                            // อัปโหลดไฟล์
+                            $imgType = self::$cfg->stored_img_type;
+                            $maxImages = 10;
+
+                            // นับจำนวนรูปที่มีอยู่แล้ว
+                            $existingCount = count(self::getRoomImages($save['id']));
+
+                            // อัปโหลดไฟล์หลายรูป
                             foreach ($request->getUploadedFiles() as $item => $file) {
                                 /* @var $file \Kotchasan\Http\UploadedFile */
                                 if ($file->hasUploadFile()) {
@@ -107,9 +190,21 @@ class Model extends \Kotchasan\Model
                                     } elseif (!$file->validFileExt(self::$cfg->booking_img_typies)) {
                                         // ชนิดของไฟล์ไม่ถูกต้อง
                                         $ret['ret_'.$item] = Language::get('The type of file is invalid');
-                                    } elseif ($item == 'picture') {
+                                    } else {
+                                        // ตรวจสอบจำนวนไม่เกิน maxImages
+                                        if ($existingCount >= $maxImages) {
+                                            $ret['ret_'.$item] = Language::get('Cannot upload more than').' '.$maxImages.' '.Language::get('Image');
+                                            break;
+                                        }
+                                        // หาช่องว่างถัดไปสำหรับเก็บรูป
+                                        $imgName = $this->getNextImageSlot($save['id'], $dir, $imgType, $maxImages);
+                                        if ($imgName === false) {
+                                            $ret['ret_'.$item] = Language::get('Cannot upload more than').' '.$maxImages.' '.Language::get('Image');
+                                            break;
+                                        }
                                         try {
-                                            $file->resizeImage(self::$cfg->booking_img_typies, $dir, $save['id'].self::$cfg->stored_img_type, self::$cfg->booking_w);
+                                            $file->resizeImage(self::$cfg->booking_img_typies, $dir, $imgName, self::$cfg->booking_w);
+                                            $existingCount++;
                                         } catch (\Exception $exc) {
                                             // ไม่สามารถอัปโหลดได้
                                             $ret['ret_'.$item] = Language::get($exc->getMessage());
@@ -160,5 +255,99 @@ class Model extends \Kotchasan\Model
         }
         // คืนค่าเป็น JSON
         echo json_encode($ret);
+    }
+
+    /**
+     * ลบรูปภาพห้อง (AJAX action)
+     *
+     * @param Request $request
+     */
+    public function deleteImage(Request $request)
+    {
+        $ret = [];
+        if ($request->initSession() && $request->isReferer() && $login = Login::isMember()) {
+            if (Login::notDemoMode($login) && Login::checkPermission($login, 'can_manage_room')) {
+                $room_id = $request->post('room_id')->toInt();
+                $img_key = $request->post('img_key')->toInt();
+                if ($room_id > 0 && $img_key > 0 && $img_key <= 10) {
+                    self::deleteRoomImage($room_id, $img_key);
+                    // Re-sequence images to fill gaps
+                    self::resequenceImages($room_id);
+                    $ret['alert'] = Language::get('Saved successfully');
+                    $ret['location'] = 'reload';
+                }
+            }
+        }
+        if (empty($ret)) {
+            $ret['alert'] = Language::get('Unable to complete the transaction');
+        }
+        echo json_encode($ret);
+    }
+
+    /**
+     * จัดเรียงลำดับรูปภาพใหม่ หลังจากลบ เพื่อไม่ให้มีช่องว่าง
+     *
+     * @param int $room_id
+     */
+    private static function resequenceImages($room_id)
+    {
+        $dir = ROOT_PATH.DATA_FOLDER.'booking/';
+        $imgType = self::$cfg->stored_img_type;
+        $maxImages = 10;
+
+        // รวบรวมไฟล์ที่มีอยู่
+        $existingFiles = [];
+        if (is_file($dir.$room_id.$imgType)) {
+            $existingFiles[] = $dir.$room_id.$imgType;
+        }
+        for ($i = 2; $i <= $maxImages; $i++) {
+            $file = $dir.$room_id.'-'.$i.$imgType;
+            if (is_file($file)) {
+                $existingFiles[] = $file;
+            }
+        }
+
+        // ลบไฟล์ทั้งหมดก่อน (rename ทับไม่ได้ถ้าชื่อซ้ำ)
+        // ย้ายไปเป็นชื่อชั่วคราวก่อน
+        $tempFiles = [];
+        foreach ($existingFiles as $idx => $file) {
+            $tempName = $dir.$room_id.'_temp_'.$idx.$imgType;
+            rename($file, $tempName);
+            $tempFiles[] = $tempName;
+        }
+
+        // ย้ายกลับด้วยชื่อที่ถูกต้อง
+        foreach ($tempFiles as $idx => $tempFile) {
+            if ($idx === 0) {
+                $newName = $dir.$room_id.$imgType;
+            } else {
+                $newName = $dir.$room_id.'-'.($idx + 1).$imgType;
+            }
+            rename($tempFile, $newName);
+        }
+    }
+
+    /**
+     * หาชื่อไฟล์ถัดไปที่ว่างสำหรับเก็บรูปภาพ
+     *
+     * @param int $room_id
+     * @param string $dir
+     * @param string $imgType
+     * @param int $maxImages
+     * @return string|false ชื่อไฟล์ หรือ false ถ้าเต็มแล้ว
+     */
+    private function getNextImageSlot($room_id, $dir, $imgType, $maxImages)
+    {
+        // ตรวจสอบช่องหลัก
+        if (!is_file($dir.$room_id.$imgType)) {
+            return $room_id.$imgType;
+        }
+        // ตรวจสอบช่อง 2-10
+        for ($i = 2; $i <= $maxImages; $i++) {
+            if (!is_file($dir.$room_id.'-'.$i.$imgType)) {
+                return $room_id.'-'.$i.$imgType;
+            }
+        }
+        return false;
     }
 }

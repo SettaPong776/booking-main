@@ -32,9 +32,38 @@ class View extends \Gcms\View
     {
         $content = '<article class="modal_detail">';
         $content .= '<header><h3 class="icon-office cuttext">{LNG_Details of} {LNG_Room}</h3></header>';
-        if (is_file(ROOT_PATH.DATA_FOLDER.'booking/'.$order->id.self::$cfg->stored_img_type)) {
-            $content .= '<figure class="center"><img src="'.WEB_URL.DATA_FOLDER.'booking/'.$order->id.self::$cfg->stored_img_type.'"></figure>';
+
+        // แสดงรูปภาพทั้งหมดของห้อง (gallery)
+        $images = \Booking\Write\Model::getRoomImages($order->id);
+        if (!empty($images)) {
+            if (count($images) === 1) {
+                // แสดงรูปเดียว
+                $content .= '<figure class="center"><img src="'.$images[0]['url'].'" alt="'.htmlspecialchars($order->name).'"></figure>';
+            } else {
+                // แสดง gallery slider
+                $content .= '<div class="room-gallery" id="room_gallery_'.$order->id.'">';
+                $content .= '<div class="room-gallery-main">';
+                $content .= '<button type="button" class="room-gallery-prev" onclick="roomGalleryNav('.$order->id.', -1)">&#10094;</button>';
+                $content .= '<img id="room_gallery_img_'.$order->id.'" src="'.$images[0]['url'].'" alt="'.htmlspecialchars($order->name).'">';
+                $content .= '<button type="button" class="room-gallery-next" onclick="roomGalleryNav('.$order->id.', 1)">&#10095;</button>';
+                $content .= '<div class="room-gallery-counter"><span id="room_gallery_num_'.$order->id.'">1</span> / '.count($images).'</div>';
+                $content .= '</div>';
+                $content .= '<div class="room-gallery-thumbs">';
+                foreach ($images as $idx => $img) {
+                    $activeClass = $idx === 0 ? ' active' : '';
+                    $content .= '<img class="room-gallery-thumb'.$activeClass.'" src="'.$img['url'].'" onclick="roomGalleryGoto('.$order->id.', '.$idx.')" alt="thumb '.($idx+1).'">';
+                }
+                $content .= '</div>';
+                // Hidden data for JS
+                $content .= '<script>window.roomGalleryData = window.roomGalleryData || {};window.roomGalleryData['.$order->id.'] = {current:0,images:[';
+                foreach ($images as $idx => $img) {
+                    $content .= ($idx > 0 ? ',' : '').'"'.$img['url'].'"';
+                }
+                $content .= ']};</script>';
+                $content .= '</div>';
+            }
         }
+
         $content .= '<table class="border data fullwidth"><tbody>';
         $content .= '<tr><th>{LNG_Room name}</th><td><span class="term" style="background-color:'.$order->color.'">'.$order->name.'</span></td></tr>';
         if ($order->detail != '') {

@@ -39,14 +39,45 @@ class View extends \Gcms\View
         $room_info = $section->add('div', [
             'class' => 'room-calendar-info'
         ]);
-        // รูปภาพห้อง
-        $thumb = is_file(ROOT_PATH.DATA_FOLDER.'booking/'.$room->id.self::$cfg->stored_img_type)
-            ? WEB_URL.DATA_FOLDER.'booking/'.$room->id.self::$cfg->stored_img_type
-            : WEB_URL.'modules/booking/img/noimage.png';
-        $room_info->add('div', [
-            'class' => 'room-calendar-img',
-            'innerHTML' => '<img src="'.$thumb.'" alt="'.htmlspecialchars($room->name).'">'
-        ]);
+        // รูปภาพห้อง (รองรับหลายรูป)
+        $images = \Booking\Write\Model::getRoomImages($room->id);
+        if (!empty($images)) {
+            if (count($images) === 1) {
+                $room_info->add('div', [
+                    'class' => 'room-calendar-img',
+                    'innerHTML' => '<img src="'.$images[0]['url'].'" alt="'.htmlspecialchars($room->name).'">'
+                ]);
+            } else {
+                $galleryHtml = '<div class="room-gallery room-gallery-inline" id="room_gallery_cal_'.$room->id.'">';
+                $galleryHtml .= '<div class="room-gallery-main">';
+                $galleryHtml .= '<button type="button" class="room-gallery-prev" onclick="roomGalleryNav(\'cal_'.$room->id.'\', -1)">&#10094;</button>';
+                $galleryHtml .= '<img id="room_gallery_img_cal_'.$room->id.'" src="'.$images[0]['url'].'" alt="'.htmlspecialchars($room->name).'">';
+                $galleryHtml .= '<button type="button" class="room-gallery-next" onclick="roomGalleryNav(\'cal_'.$room->id.'\', 1)">&#10095;</button>';
+                $galleryHtml .= '<div class="room-gallery-counter"><span id="room_gallery_num_cal_'.$room->id.'">1</span> / '.count($images).'</div>';
+                $galleryHtml .= '</div>';
+                $galleryHtml .= '<div class="room-gallery-thumbs">';
+                foreach ($images as $idx => $img) {
+                    $activeClass = $idx === 0 ? ' active' : '';
+                    $galleryHtml .= '<img class="room-gallery-thumb'.$activeClass.'" src="'.$img['url'].'" onclick="roomGalleryGoto(\'cal_'.$room->id.'\', '.$idx.')" alt="thumb '.($idx+1).'">';
+                }
+                $galleryHtml .= '</div>';
+                $galleryHtml .= '<script>window.roomGalleryData = window.roomGalleryData || {};window.roomGalleryData["cal_'.$room->id.'"] = {current:0,images:[';
+                foreach ($images as $idx => $img) {
+                    $galleryHtml .= ($idx > 0 ? ',' : '').'"'.$img['url'].'"';
+                }
+                $galleryHtml .= ']};</script>';
+                $galleryHtml .= '</div>';
+                $room_info->add('div', [
+                    'class' => 'room-calendar-img room-calendar-gallery',
+                    'innerHTML' => $galleryHtml
+                ]);
+            }
+        } else {
+            $room_info->add('div', [
+                'class' => 'room-calendar-img',
+                'innerHTML' => '<img src="'.WEB_URL.'modules/booking/img/noimage.png" alt="'.htmlspecialchars($room->name).'">'
+            ]);
+        }
         // รายละเอียด
         $room_detail = $room_info->add('div', [
             'class' => 'room-calendar-detail'

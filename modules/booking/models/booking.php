@@ -139,14 +139,14 @@ class Model extends \Kotchasan\Model
                         // ไม่ได้กรอก attendees
                         $ret['ret_attendees'] = 'Please fill in';
                     }
-                    if (empty($login['department'])) {
-                        // สมาชิกไม่สังกัดแผนก
-                        if (in_array('department', self::$cfg->categories_disabled)) {
-                            $ret['error'] = Language::get('You are not affiliated with a department. Please contact the administrator.');
-                        } else {
-                            $ret['error'] = Language::get('You are not affiliated with a department. Please select a department first.');
-                        }
-                    }
+                    // ยกเลิกการตรวจสอบสังกัดแผนกตามความต้องการ
+                    // if (empty($login['department'])) {
+                    //     if (in_array('department', self::$cfg->categories_disabled)) {
+                    //         $ret['error'] = Language::get('You are not affiliated with a department. Please contact the administrator.');
+                    //     } else {
+                    //         $ret['error'] = Language::get('You are not affiliated with a department. Please select a department first.');
+                    //     }
+                    // }
                     // Database
                     $db = $this->db();
                     // table

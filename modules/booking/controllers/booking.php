@@ -48,15 +48,8 @@ class Controller extends \Gcms\Controller
             $index->end = $begin_date.' 17:00:00';
         }
         if ($index && ($login || empty(self::$cfg->booking_login_type))) {
-            if (empty($login['department'])) {
-                // สมาชิกไม่สังกัดแผนก
-                if (in_array('department', self::$cfg->categories_disabled)) {
-                    $error = Language::get('You are not affiliated with a department. Please contact the administrator.');
-                } else {
-                    $error = Language::get('You are not affiliated with a department. Please select a department first.');
-                }
-                return '<div class=setup_frm><div class="center error">'.$error.'</div></div>';
-            } elseif ($login['id'] == $index->member_id && ($index->id == 0 || ($index->status == 0 && $index->approve == 1 && $index->today == 0))) {
+            // ยกเลิกการเช็ค department
+            if ($login['id'] == $index->member_id && ($index->id == 0 || ($index->status == 0 && $index->approve == 1 && $index->today == 0))) {
                 // เจ้าของ และรายการใหม่ หรือยังไม่ได้อนุมัติ และไม่ใช่วันนี้
                 $this->menu = $index->id == 0 ? 'rooms' : 'booking';
                 // ข้อความ title bar

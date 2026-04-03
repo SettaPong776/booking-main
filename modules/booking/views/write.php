@@ -80,23 +80,67 @@ class View extends \Gcms\View
                 'value' => isset($index->{$key}) ? $index->{$key} : ''
             ]);
         }
-        // picture
-        if (is_file(ROOT_PATH.DATA_FOLDER.'booking/'.$index->id.self::$cfg->stored_img_type)) {
-            $img = WEB_URL.DATA_FOLDER.'booking/'.$index->id.self::$cfg->stored_img_type.'?'.time();
-        } else {
-            $img = WEB_URL.'modules/booking/img/noimage.png';
+
+        // Multi-image upload section (max 10 images)
+        $maxImages = 10;
+        $dir = ROOT_PATH.DATA_FOLDER.'booking/';
+        $imgType = self::$cfg->stored_img_type;
+
+        // Collect existing images
+        $existingImages = [];
+        if ($index->id > 0) {
+            // Check main image: {id}.jpg
+            if (is_file($dir.$index->id.$imgType)) {
+                $existingImages[] = [
+                    'src' => WEB_URL.DATA_FOLDER.'booking/'.$index->id.$imgType.'?'.time(),
+                    'key' => 1
+                ];
+            }
+            // Check additional images: {id}-2.jpg through {id}-10.jpg
+            for ($i = 2; $i <= $maxImages; $i++) {
+                if (is_file($dir.$index->id.'-'.$i.$imgType)) {
+                    $existingImages[] = [
+                        'src' => WEB_URL.DATA_FOLDER.'booking/'.$index->id.'-'.$i.$imgType.'?'.time(),
+                        'key' => $i
+                    ];
+                }
+            }
         }
-        $fieldset->add('file', [
-            'id' => 'picture',
-            'labelClass' => 'g-input icon-upload',
-            'itemClass' => 'item',
-            'label' => '{LNG_Image}',
-            'comment' => '{LNG_Browse image uploaded, type :type} ({LNG_resized automatically})',
-            'dataPreview' => 'imgPicture',
-            'capture' => true,
-            'previewSrc' => $img,
-            'accept' => self::$cfg->booking_img_typies
+
+        // Build the image upload HTML
+        $imgHtml = '<div class="room-images-upload">';
+        $imgHtml .= '<label class="g-input icon-upload"><span>{LNG_Image} ('.Language::replace('max :count images', [':count' => $maxImages]).')</span></label>';
+        $imgHtml .= '<div class="room-images-comment">{LNG_Browse image uploaded, type :type} ({LNG_resized automatically})</div>';
+
+        // Existing images preview
+        if (!empty($existingImages)) {
+            $imgHtml .= '<div class="room-images-preview" id="room_images_preview">';
+            foreach ($existingImages as $img) {
+                $imgHtml .= '<div class="room-img-item" id="img_item_'.$img['key'].'">';
+                $imgHtml .= '<img src="'.$img['src'].'" alt="room image '.$img['key'].'">';
+                $imgHtml .= '<button type="button" class="room-img-delete" onclick="deleteRoomImage('.$index->id.', '.$img['key'].')" title="'.Language::get('Delete').'">✕</button>';
+                $imgHtml .= '</div>';
+            }
+            $imgHtml .= '</div>';
+        }
+
+        // Available upload slots
+        $remainingSlots = $maxImages - count($existingImages);
+        $imgHtml .= '<div class="room-images-add" id="room_images_add">';
+        $imgHtml .= '<div class="room-img-add-btn" id="room_img_add_trigger">';
+        $imgHtml .= '<input type="file" name="pictures[]" id="room_pictures" multiple accept="'.implode(',', array_map(function($t) { return '.'.$t; }, self::$cfg->booking_img_typies)).'" onchange="previewRoomImages(this, '.$maxImages.')">';
+        $imgHtml .= '<span class="icon-plus"> {LNG_Add} {LNG_Image}</span>';
+        $imgHtml .= '</div>';
+        $imgHtml .= '<div id="room_img_new_preview" class="room-images-preview"></div>';
+        $imgHtml .= '<div class="room-img-slots"><span id="remaining_slots">'.$remainingSlots.'</span> / '.$maxImages.' {LNG_Image}</div>';
+        $imgHtml .= '</div>';
+        $imgHtml .= '</div>';
+
+        $fieldset->add('div', [
+            'class' => 'item',
+            'innerHTML' => $imgHtml
         ]);
+
         $fieldset = $form->add('fieldset', [
             'class' => 'submit'
         ]);
@@ -110,8 +154,14 @@ class View extends \Gcms\View
             'id' => 'id',
             'value' => $index->id
         ]);
+        // existing image count (for JS)
+        $fieldset->add('hidden', [
+            'id' => 'existing_img_count',
+            'value' => count($existingImages)
+        ]);
         \Gcms\Controller::$view->setContentsAfter([
-            '/:type/' => implode(', ', self::$cfg->booking_img_typies)
+            '/:type/' => implode(', ', self::$cfg->booking_img_typies),
+            '/:count/' => $maxImages
         ]);
         // คืนค่า HTML
         return $form->render();

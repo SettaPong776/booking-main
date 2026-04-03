@@ -122,3 +122,101 @@ function initBookingSettings() {
   $G('booking_approve_level').addEvent('change', doChanged);
   doChanged.call(this);
 }
+
+/* ══════════════════════════════════════════════════════
+   Room Gallery — Multi-image viewer
+   ══════════════════════════════════════════════════════ */
+
+/**
+ * Navigate gallery by direction (-1 = prev, 1 = next)
+ */
+function roomGalleryNav(galleryId, direction) {
+  var data = window.roomGalleryData && window.roomGalleryData[galleryId];
+  if (!data) return;
+  var newIdx = data.current + direction;
+  if (newIdx < 0) newIdx = data.images.length - 1;
+  if (newIdx >= data.images.length) newIdx = 0;
+  roomGalleryGoto(galleryId, newIdx);
+}
+
+/**
+ * Go to specific image index in gallery
+ */
+function roomGalleryGoto(galleryId, index) {
+  var data = window.roomGalleryData && window.roomGalleryData[galleryId];
+  if (!data) return;
+  data.current = index;
+  // Update main image
+  var img = document.getElementById('room_gallery_img_' + galleryId);
+  if (img) {
+    img.style.opacity = '0';
+    setTimeout(function() {
+      img.src = data.images[index];
+      img.style.opacity = '1';
+    }, 150);
+  }
+  // Update counter
+  var num = document.getElementById('room_gallery_num_' + galleryId);
+  if (num) num.textContent = (index + 1);
+  // Update thumbs
+  var gallery = document.getElementById('room_gallery_' + galleryId);
+  if (gallery) {
+    var thumbs = gallery.querySelectorAll('.room-gallery-thumb');
+    for (var i = 0; i < thumbs.length; i++) {
+      thumbs[i].classList.toggle('active', i === index);
+    }
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   Room Image Upload — Multi-image management
+   ══════════════════════════════════════════════════════ */
+
+/**
+ * Delete a room image via AJAX
+ */
+function deleteRoomImage(roomId, imgKey) {
+  if (confirm(trans('YOU_WANT_TO_XXX').replace('XXX', DELETE))) {
+    send(
+      WEB_URL + 'index.php/booking/model/write/deleteImage',
+      'room_id=' + roomId + '&img_key=' + imgKey,
+      doFormSubmit
+    );
+  }
+}
+
+/**
+ * Preview selected images before upload
+ */
+function previewRoomImages(input, maxImages) {
+  var existingCount = parseInt(document.getElementById('existing_img_count').value) || 0;
+  var previewContainer = document.getElementById('room_img_new_preview');
+  var slotsSpan = document.getElementById('remaining_slots');
+  previewContainer.innerHTML = '';
+
+  var files = input.files;
+  var totalAllowed = maxImages - existingCount;
+
+  if (files.length > totalAllowed) {
+    alert(trans('Cannot upload more than') + ' ' + maxImages + ' ' + trans('Image'));
+    // Keep only allowed number of files (can't modify FileList, but show warning)
+  }
+
+  var showCount = Math.min(files.length, totalAllowed);
+  for (var i = 0; i < showCount; i++) {
+    var reader = new FileReader();
+    reader.onload = (function(file) {
+      return function(e) {
+        var div = document.createElement('div');
+        div.className = 'room-img-item room-img-new';
+        div.innerHTML = '<img src="' + e.target.result + '" alt="new image"><span class="room-img-new-label">NEW</span>';
+        previewContainer.appendChild(div);
+      };
+    })(files[i]);
+    reader.readAsDataURL(files[i]);
+  }
+
+  // Update remaining slots count
+  var remaining = Math.max(0, totalAllowed - showCount);
+  if (slotsSpan) slotsSpan.textContent = remaining;
+}

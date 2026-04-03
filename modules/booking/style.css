@@ -753,4 +753,315 @@
   .room-calendar-detail {
     padding: 16px 20px;
   }
+
+  .room-gallery-thumbs {
+    gap: 4px;
+  }
+
+  .room-gallery-thumb {
+    width: 44px;
+    height: 33px;
+  }
+
+  .room-images-preview {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  }
 }
+
+/* ═══════════════════════════════════════════════════════
+   ROOM GALLERY — Multi-image viewer (Detail Modal & Calendar Page)
+   ═══════════════════════════════════════════════════════ */
+.room-gallery {
+  width: 100%;
+  margin: 0 0 12px 0;
+}
+
+.room-gallery-main {
+  position: relative;
+  width: 100%;
+  background: #f1f5f9;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-gallery-main > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.2s ease;
+  border-radius: 12px;
+}
+
+.room-gallery-prev,
+.room-gallery-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s ease, transform 0.15s ease;
+  z-index: 2;
+  line-height: 1;
+  padding: 0;
+}
+
+.room-gallery-prev { left: 8px; }
+.room-gallery-next { right: 8px; }
+
+.room-gallery-prev:hover,
+.room-gallery-next:hover {
+  background: rgba(99, 102, 241, 0.85);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.room-gallery-counter {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+  z-index: 2;
+  letter-spacing: 0.04em;
+}
+
+.room-gallery-thumbs {
+  display: flex;
+  gap: 6px;
+  padding: 8px 0 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #c7d2fe #f1f5f9;
+}
+
+.room-gallery-thumb {
+  width: 56px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  opacity: 0.6;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+
+.room-gallery-thumb:hover {
+  opacity: 0.9;
+  border-color: #a5b4fc;
+}
+
+.room-gallery-thumb.active {
+  opacity: 1;
+  border-color: #6366f1;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+/* Gallery inside room-calendar-info */
+.room-calendar-gallery {
+  width: 320px;
+  height: auto;
+  min-height: auto;
+}
+
+.room-calendar-gallery .room-gallery {
+  padding: 8px;
+}
+
+.room-calendar-gallery .room-gallery-main {
+  border-radius: 8px;
+  aspect-ratio: 16 / 10;
+}
+
+.room-calendar-gallery .room-gallery-thumbs {
+  padding: 6px 0 0;
+}
+
+.room-calendar-gallery .room-gallery-thumb {
+  width: 40px;
+  height: 30px;
+}
+
+/* Gallery inside modal */
+.modal_detail .room-gallery {
+  margin: 0 0 10px 0;
+}
+
+.modal_detail .room-gallery-main {
+  max-height: 300px;
+  aspect-ratio: auto;
+}
+
+.modal_detail .room-gallery-main > img {
+  max-height: 300px;
+  object-fit: contain;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ROOM IMAGE UPLOAD — Multi-image upload form
+   ═══════════════════════════════════════════════════════ */
+.room-images-upload {
+  margin-top: 4px;
+}
+
+.room-images-upload > label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.room-images-comment {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-bottom: 10px;
+}
+
+.room-images-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.room-img-item {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  aspect-ratio: 4 / 3;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.room-img-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.15);
+}
+
+.room-img-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.room-img-delete {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  background: rgba(239, 68, 68, 0.9);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s ease;
+  opacity: 0;
+  transform: scale(0.8);
+  line-height: 1;
+  padding: 0;
+}
+
+.room-img-item:hover .room-img-delete {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.room-img-delete:hover {
+  background: #dc2626;
+  transform: scale(1.1);
+}
+
+/* New image preview label */
+.room-img-new {
+  border-color: #818cf8;
+  border-style: dashed;
+}
+
+.room-img-new-label {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  background: linear-gradient(135deg, #6366f1, #818cf8);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 8px;
+  letter-spacing: 0.06em;
+}
+
+/* Add image button */
+.room-images-add {
+  margin-bottom: 8px;
+}
+
+.room-img-add-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
+  border: 2px dashed #a5b4fc;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #6366f1;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.18s ease;
+}
+
+.room-img-add-btn:hover {
+  background: linear-gradient(135deg, #e0e7ff, #eef2ff);
+  border-color: #6366f1;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+
+.room-img-add-btn input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.room-img-slots {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.room-img-slots span {
+  color: #6366f1;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .room-calendar-gallery {
+    width: 100%;
+  }
+}

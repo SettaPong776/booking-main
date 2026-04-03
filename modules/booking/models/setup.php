@@ -68,6 +68,10 @@ class Model extends \Kotchasan\Model
                         // ลบ
                         $this->db()->delete($table, ['id', $match[1]], 0);
                         $this->db()->delete($this->getTableName('rooms_meta'), ['room_id', $match[1]], 0);
+                        // ลบรูปภาพทั้งหมดของห้อง
+                        foreach ($match[1] as $room_id) {
+                            \Booking\Write\Model::deleteAllRoomImages((int) $room_id);
+                        }
                         // log
                         \Index\Log\Model::add(0, 'booking', 'Delete', '{LNG_Delete} {LNG_Room} ID : '.implode(', ', $match[1]), $login['id']);
                         // reload

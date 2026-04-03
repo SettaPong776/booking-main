@@ -77,6 +77,7 @@ return array(
   'Can not be performed this request. Because they do not find the information you need or you are not allowed' => 'ไม่สามารถดำเนินการตามที่ร้องขอได้ เนื่องจากไม่พบข้อมูลที่ต้องการ หรือ คุณไม่มีสิทธิ์',
   'Can&#039;t login' => 'ไม่สามารถเข้าระบบได้',
   'Cancel' => 'ยกเลิก',
+  'Cannot upload more than' => 'ไม่สามารถอัปโหลดได้มากกว่า',
   'CANCEL_RESERVATIONS' => array(
     0 => 'สถานะรอตรวจสอบ',
     1 => 'ก่อนถึงเวลาจอง',
@@ -210,6 +211,7 @@ return array(
   'Mail server' => 'เซิร์ฟเวอร์อีเมล',
   'Mail server port number (default is 25, for GMail used 465, 587 for DirectAdmin).' => 'หมายเลขพอร์ตของเมล์เซิร์ฟเวอร์ (ค่าปกติคือ 25, สำหรับ gmail ใช้ 465, 587 สำหรับ DirectAdmin)',
   'Mail server settings' => 'ค่ากำหนดของเมล์เซิร์ฟเวอร์',
+  'max :count images' => 'สูงสุด :count รูป',
   'MAIL_PROGRAMS' => array(
     0 => 'ส่งจดหมายด้วย PHP',
     1 => 'ส่งจดหมายด้วย PHPMailer+SMTP (แนะนำ)',
