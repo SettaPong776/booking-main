@@ -59,7 +59,7 @@ class Model extends \Kotchasan\Model
             ->join('rooms R', 'LEFT', ['R.id', 'V.room_id'])
             ->join('user U', 'LEFT', ['U.id', 'V.member_id']);
         $n = 1;
-        foreach (Language::get('BOOKING_SELECT', []) as $key => $label) {
+        foreach (Language::get('BOOKING_SELECT', []) + Language::get('BOOKING_TEXT', []) as $key => $label) {
             $on = [
                 ['M'.$n.'.reservation_id', 'V.id'],
                 ['M'.$n.'.name', $key]

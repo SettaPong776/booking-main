@@ -55,8 +55,7 @@ return array(
     'accessories' => 'อุปกรณ์'
   ),
   'BOOKING_SELECT' => array(
-    'use' => 'ใช้สำหรับ',
-    'department' => 'แผนกที่ขอใช้'
+    'use' => 'ใช้สำหรับ'
   ),
   'BOOKING_STATUS' => array(
     0 => 'รอตรวจสอบ',
@@ -64,6 +63,9 @@ return array(
     2 => 'ไม่อนุมัติ',
     3 => 'ยกเลิกโดยผู้จอง',
     4 => 'ยกเลิกโดยเจ้าหน้าที่'
+  ),
+  'BOOKING_TEXT' => array(
+    'department' => 'ชื่อหน่วยงาน'
   ),
   'BOOLEANS' => array(
     0 => 'ปิดใช้งาน',

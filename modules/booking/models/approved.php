@@ -51,6 +51,34 @@ class Model extends \Kotchasan\Model
                         if (empty($ret)) {
                             // บันทึกการอนุมัติ
                             $ret['alert'] = self::approving($booking, $login, $approve, $status, $reason);
+                            
+                            // อัปโหลดไฟล์แนบ
+                            foreach ($request->getUploadedFiles() as $item => $file) {
+                                /* @var $file \Kotchasan\Http\UploadedFile */
+                                if ($item === 'attachment' && $file->hasUploadFile()) {
+                                    $dir = ROOT_PATH.DATA_FOLDER.'booking/';
+                                    if (\Kotchasan\File::makeDirectory($dir) && $file->validFileExt(['pdf', 'doc', 'docx', 'xls', 'xlsx', 'jpeg', 'jpg', 'png', 'zip', 'rar'])) {
+                                        $ext = $file->getClientFileExt();
+                                        $fileName = 'attachment_'.$booking->id.'.'.$ext;
+                                        try {
+                                            $file->moveTo($dir.$fileName);
+                                            // ลบข้อมูลเดิม
+                                            if (!empty($fileName)) {
+                                                static::createQuery()->delete('reservation_data', [['reservation_id', $booking->id], ['name', 'attachment']])->execute();
+                                                // บันทึกใหม่
+                                                static::createQuery()->insert('reservation_data', [
+                                                    'reservation_id' => $booking->id,
+                                                    'name' => 'attachment',
+                                                    'value' => $fileName
+                                                ])->execute();
+                                            }
+                                        } catch (\Exception $exc) {
+                                            // ignore
+                                        }
+                                    }
+                                }
+                            }
+                            
                             // close
                             $ret['modal'] = 'close';
                             $ret['location'] = 'reload';
@@ -143,6 +171,7 @@ class Model extends \Kotchasan\Model
                 ->set($save)
                 ->where(['id', $booking->id])
                 ->execute();
+            
             if ($booking->approve != $save['approve'] || $booking->status != $save['status']) {
                 // log สถานะปัจจุบัน
                 \Index\Log\Model::add($booking->id, 'booking', 'Status', \Booking\Tools\View::toStatus($save), $login['id']);

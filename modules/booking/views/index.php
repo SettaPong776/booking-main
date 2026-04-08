@@ -77,6 +77,11 @@ class View extends \Booking\Tools\View
                 $hideColumns[] = $label;
             }
         }
+        foreach (Language::get('BOOKING_TEXT', []) as $key => $label) {
+            $this->topic[] = $label;
+            $this->topic[$key] = '';
+            $hideColumns[] = $label;
+        }
         $filters[] = [
             'name' => 'status',
             'text' => '{LNG_Status}',
@@ -193,6 +198,12 @@ class View extends \Booking\Tools\View
             if (isset($item[$v])) {
                 $topic[] = $v;
                 $topic[] = $this->category->get($k, $item[$v]);
+            }
+        }
+        foreach (Language::get('BOOKING_TEXT', []) as $k => $v) {
+            if (isset($item[$k]) && $item[$k] != '') {
+                $topic[] = $v;
+                $topic[] = $item[$k];
             }
         }
         $item['topic'] = '<div class=two_lines><b>'.$item['topic'].'</b><small class=block>'.implode(' ', $topic).'</small></div>';

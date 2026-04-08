@@ -106,15 +106,29 @@ class View extends \Gcms\View
         $content .= '<tr><th class=top>{LNG_Booking date}</th><td>'.\Booking\Tools\View::dateRange($order).'</td></tr>';
         // หมวดหมู่
         $category = \Booking\Category\Model::init();
-        foreach (Language::get('BOOKING_SELECT', []) as $key => $label) {
+        foreach (Language::get('BOOKING_RADIO', []) as $key => $label) {
             if (!empty($order[$key])) {
-                $content .= '<tr><th>'.$label.'</th><td>'.$category->get($key, $order[$key]).'</td></tr>';
+                $options = Language::get(strtoupper($key).'_TYPIES', []);
+                $val = isset($options[$order[$key]]) ? $options[$order[$key]] : $order[$key];
+                $content .= '<tr><th>'.$label.'</th><td>'.$val.'</td></tr>';
             }
         }
         foreach (Language::get('BOOKING_TEXT', []) as $key => $label) {
             if (!empty($order[$key])) {
                 $content .= '<tr><th>'.$label.'</th><td>'.$order[$key].'</td></tr>';
             }
+        }
+
+        foreach (Language::get('BOOKING_SELECT', []) as $key => $label) {
+            if (!empty($order[$key])) {
+                $content .= '<tr><th>'.$label.'</th><td>'.$category->get($key, $order[$key]).'</td></tr>';
+            }
+        }
+
+
+        if (!empty($order['attachment'])) {
+            $url = WEB_URL.DATA_FOLDER.'booking/'.$order['attachment'];
+            $content .= '<tr><th>{LNG_Attached file}</th><td><a href="'.$url.'" target="_blank" class="button blue"><span class="icon-download">{LNG_Download}</span></a></td></tr>';
         }
 
         $content .= '<tr><th>{LNG_Status}</th><td>'.self::showStatus(Language::get('BOOKING_STATUS'), $order['status']).'</td></tr>';

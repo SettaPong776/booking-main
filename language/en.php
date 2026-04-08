@@ -10,8 +10,7 @@ return array(
     'accessories' => 'Accessories'
   ),
   'BOOKING_SELECT' => array(
-    'use' => 'use for',
-    'department' => 'Requested department'
+    'use' => 'use for'
   ),
   'BOOKING_STATUS' => array(
     0 => 'Pending',
@@ -19,6 +18,9 @@ return array(
     2 => 'Not allowed',
     3 => 'Canceled by customer',
     4 => 'Canceled by the officer'
+  ),
+  'BOOKING_TEXT' => array(
+    'department' => 'Requested department'
   ),
   'BOOLEANS' => array(
     0 => 'Disable',

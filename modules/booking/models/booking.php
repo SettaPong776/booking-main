@@ -79,11 +79,13 @@ class Model extends \Kotchasan\Model
                     ->where(['V.id', $id]);
                 $select = ['V.*', 'U.name', 'U.phone', $today];
                 $n = 1;
-                foreach (Language::get('BOOKING_SELECT', []) + Language::get('BOOKING_OPTIONS', []) + Language::get('BOOKING_RADIO', []) as $key => $label) {
+                foreach (Language::get('BOOKING_SELECT', []) + Language::get('BOOKING_OPTIONS', []) + Language::get('BOOKING_RADIO', []) + Language::get('BOOKING_TEXT', []) as $key => $label) {
                     $query->join('reservation_data M'.$n, 'LEFT', [['M'.$n.'.reservation_id', 'V.id'], ['M'.$n.'.name', $key]]);
                     $select[] = 'M'.$n.'.value '.$key;
                     ++$n;
                 }
+                $query->join('reservation_data M'.$n, 'LEFT', [['M'.$n.'.reservation_id', 'V.id'], ['M'.$n.'.name', 'attachment']]);
+                $select[] = 'M'.$n.'.value attachment';
                 return $query->first($select);
             }
         }
@@ -220,6 +222,7 @@ class Model extends \Kotchasan\Model
                             $datas[$key] = implode(',', $values);
                         }
                     }
+                    
                     if (empty($ret)) {
                         $save['member_id'] = $index->member_id;
                         $save['status'] = $index->status;
@@ -232,6 +235,13 @@ class Model extends \Kotchasan\Model
                             $save['id'] = $index->id;
                             $save['create_date'] = $index->create_date;
                         }
+                        
+
+                    }
+
+                    if (empty($ret)) {
+                        
+
                         if ($index->id == 0) {
                             // ใหม่
                             $db->insert($table, $save);
@@ -272,6 +282,9 @@ class Model extends \Kotchasan\Model
                             $db->update($table_user, $login['id'], $user);
                         }
                         // รายละเอียดการจอง
+                        if (empty($datas['attachment']) && !empty($index->attachment)) {
+                            $datas['attachment'] = $index->attachment;
+                        }
                         $table = $this->getTableName('reservation_data');
                         $db->delete($table, ['reservation_id', $save['id']], 0);
                         foreach ($datas as $key => $value) {

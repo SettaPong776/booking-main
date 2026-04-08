@@ -89,6 +89,27 @@ class View extends \Booking\Tools\View
             'itemClass' => 'item',
             'value' => $index['reason']
         ]);
+        
+        // attachment upload
+        $fieldset->add('file', [
+            'id' => 'attachment',
+            'labelClass' => 'g-input icon-upload',
+            'itemClass' => 'item',
+            'label' => '{LNG_Attached file}',
+            'comment' => '{LNG_Browse file} (pdf, doc, docx, xls, xlsx)',
+            'accept' => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png', 'zip', 'rar']
+        ]);
+        
+        if (!empty($index['attachment'])) {
+            $url = WEB_URL.DATA_FOLDER.'booking/'.$index['attachment'];
+            $fieldset->add('item', [
+                'labelClass' => 'g-input icon-download',
+                'itemClass' => 'item',
+                'label' => '{LNG_Attached file}',
+                'text' => '<a href="'.$url.'" target="_blank" class="button blue"><span class="icon-download">{LNG_Download}</span></a>'
+            ]);
+        }
+
         $fieldset = $form->add('fieldset', [
             'class' => 'submit right'
         ]);

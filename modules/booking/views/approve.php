@@ -48,7 +48,7 @@ class View extends \Booking\Tools\View
             'token' => true
         ]);
         $fieldset = $form->add('fieldset', [
-            'title' => '{LNG_Details of} {LNG_Booking} '.self::toStatus((array) $index, true)
+            'title' => '{LNG_Details of} {LNG_Booking} ' . self::toStatus((array) $index, true)
         ]);
         $groups = $fieldset->add('groups');
         // room_id
@@ -147,7 +147,32 @@ class View extends \Booking\Tools\View
             'itemClass' => 'width50',
             'value' => date('H:i', $end)
         ]);
-        // ตัวเลือก select
+        // textbox
+        foreach (Language::get('BOOKING_TEXT', []) as $key => $label) {
+            $fieldset->add('text', [
+                'id' => $key,
+                'labelClass' => 'g-input icon-edit',
+                'itemClass' => 'item',
+                'label' => $label,
+                'maxlength' => 250,
+                'value' => isset($index->{$key}) ? $index->{$key} : ''
+            ]);
+        }
+
+        $groups = $fieldset->add('groups');
+        // radio
+        foreach (Language::get('BOOKING_RADIO', []) as $key => $label) {
+            $groups->add('radiogroups', [
+                'id' => $key,
+                'labelClass' => 'g-input icon-menus',
+                'itemClass' => 'width50',
+                'label' => $label,
+                'options' => Language::get(strtoupper($key) . '_TYPIES'),
+                'value' => isset($index->{$key}) ? $index->{$key} : ''
+            ]);
+        }
+
+
         $category = \Booking\Category\Model::init();
         $i = 0;
         foreach (Language::get('BOOKING_SELECT', []) as $key => $label) {
@@ -166,17 +191,7 @@ class View extends \Booking\Tools\View
                 ]);
             }
         }
-        // textbox
-        foreach (Language::get('BOOKING_TEXT', []) as $key => $label) {
-            $fieldset->add('text', [
-                'id' => $key,
-                'labelClass' => 'g-input icon-edit',
-                'itemClass' => 'item',
-                'label' => $label,
-                'maxlength' => 250,
-                'value' => isset($index->{$key}) ? $index->{$key} : ''
-            ]);
-        }
+
 
 
         // status
@@ -198,17 +213,14 @@ class View extends \Booking\Tools\View
             'disabled' => true,
             'value' => $index->reason
         ]);
+
+
+
         if ($canApprove != 0) {
             $fieldset = $form->add('fieldset', [
                 'class' => 'submit'
             ]);
-            if ($canEdit) {
-                // submit
-                $fieldset->add('submit', [
-                    'class' => 'button blue large icon-save border',
-                    'value' => '{LNG_Save}'
-                ]);
-            }
+
             $booking_status = Language::get('BOOKING_STATUS');
             // อนุมัติ
             $fieldset->add('button', [

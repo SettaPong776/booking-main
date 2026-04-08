@@ -39,11 +39,13 @@ class Model extends \Kotchasan\Model
             ->where(['V.id', $id]);
         $select = ['V.*', 'U.name', 'U.phone', 'U.username'];
         $n = 1;
-        foreach (Language::get('BOOKING_SELECT', []) + Language::get('BOOKING_OPTIONS', []) + Language::get('BOOKING_TEXT', []) as $key => $label) {
+        foreach (Language::get('BOOKING_SELECT', []) + Language::get('BOOKING_OPTIONS', []) + Language::get('BOOKING_RADIO', []) + Language::get('BOOKING_TEXT', []) as $key => $label) {
             $query->join('reservation_data M'.$n, 'LEFT', [['M'.$n.'.reservation_id', 'V.id'], ['M'.$n.'.name', $key]]);
             $select[] = 'M'.$n.'.value '.$key;
             ++$n;
         }
+        $query->join('reservation_data M'.$n, 'LEFT', [['M'.$n.'.reservation_id', 'V.id'], ['M'.$n.'.name', 'attachment']]);
+        $select[] = 'M'.$n.'.value attachment';
         return $query->first($select);
     }
 
@@ -113,6 +115,12 @@ class Model extends \Kotchasan\Model
                                 $datas[$key] = $value;
                             }
                         }
+                        foreach (Language::get('BOOKING_RADIO', []) as $key => $label) {
+                            $value = $request->post($key)->topic();
+                            if ($value != '') {
+                                $datas[$key] = $value;
+                            }
+                        }
                         foreach (Language::get('BOOKING_TEXT', []) as $key => $label) {
                             $value = $request->post($key)->topic();
                             if ($value != '') {
@@ -126,24 +134,40 @@ class Model extends \Kotchasan\Model
                             }
                         }
                         if (empty($ret)) {
+                            // อัปโหลดไฟล์แนบ
+                            foreach ($request->getUploadedFiles() as $item => $file) {
+                                /* @var $file \Kotchasan\Http\UploadedFile */
+                                if ($item === 'attachment' && $file->hasUploadFile()) {
+                                    $dir = ROOT_PATH.DATA_FOLDER.'booking/';
+                                    if (!\Kotchasan\File::makeDirectory($dir)) {
+                                        $ret['ret_'.$item] = Language::replace('Directory %s cannot be created or is read-only.', DATA_FOLDER.'booking/');
+                                    } elseif (!$file->validFileExt(['pdf', 'doc', 'docx', 'xls', 'xlsx', 'jpeg', 'jpg', 'png', 'zip', 'rar'])) {
+                                        $ret['ret_'.$item] = Language::get('The type of file is invalid');
+                                    } else {
+                                        $ext = $file->getClientFileExt();
+                                        $fileName = 'attachment_'.$index->id.'.'.$ext;
+                                        try {
+                                            $file->moveTo($dir.$fileName);
+                                            $datas['attachment'] = $fileName;
+                                        } catch (\Exception $exc) {
+                                            $ret['ret_'.$item] = Language::get($exc->getMessage());
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if (empty($ret)) {
                             // ตาราง
                             $reservation_table = $this->getTableName('reservation');
                             $reservation_data = $this->getTableName('reservation_data');
                             // Database
                             $db = $this->db();
-                            /*
-                            // approver
-                            if ($save['status'] != $index->status) {
-                            $save['approver'] = $login['id'];
-                            $save['approved_date'] = date('Y-m-d H:i:s');
-                            } else {
-                            $save['approver'] = $index->approver;
-                            $save['approved_date'] = $index->approved_date;
-                            }
-                             */
                             // save
                             $db->update($reservation_table, $index->id, $save);
                             // รายละเอียดการจอง
+                            if (empty($datas['attachment']) && !empty($index->attachment)) {
+                                $datas['attachment'] = $index->attachment;
+                            }
                             $db->delete($reservation_data, ['reservation_id', $index->id], 0);
                             foreach ($datas as $key => $value) {
                                 if ($value != '') {

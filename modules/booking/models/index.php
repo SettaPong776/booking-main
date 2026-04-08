@@ -54,7 +54,7 @@ class Model extends \Kotchasan\Model
             ->from('reservation V')
             ->join('rooms R', 'LEFT', ['R.id', 'V.room_id']);
         $n = 1;
-        foreach (Language::get('BOOKING_SELECT', []) as $key => $label) {
+        foreach (Language::get('BOOKING_SELECT', []) + Language::get('BOOKING_TEXT', []) as $key => $label) {
             $on = [
                 ['M'.$n.'.reservation_id', 'V.id'],
                 ['M'.$n.'.name', $key]
@@ -158,11 +158,13 @@ class Model extends \Kotchasan\Model
             $select[] = 'M'.$n.'.value '.$key;
             ++$n;
         }
-        foreach (Language::get('BOOKING_SELECT', []) + Language::get('BOOKING_OPTIONS', []) + Language::get('BOOKING_TEXT', []) as $key => $label) {
+        foreach (Language::get('BOOKING_SELECT', []) + Language::get('BOOKING_OPTIONS', []) + Language::get('BOOKING_RADIO', []) + Language::get('BOOKING_TEXT', []) as $key => $label) {
             $query->join('reservation_data M'.$n, 'LEFT', [['M'.$n.'.reservation_id', 'V.id'], ['M'.$n.'.name', $key]]);
             $select[] = 'M'.$n.'.value '.$key;
             ++$n;
         }
+        $query->join('reservation_data M'.$n, 'LEFT', [['M'.$n.'.reservation_id', 'V.id'], ['M'.$n.'.name', 'attachment']]);
+        $select[] = 'M'.$n.'.value attachment';
         return $query->first($select);
     }
 

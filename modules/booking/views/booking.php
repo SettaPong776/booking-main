@@ -153,6 +153,18 @@ class View extends \Booking\Tools\View
                 'value' => isset($index->{$key}) ? $index->{$key} : key($options)
             ]);
         }
+        // textbox
+        foreach (Language::get('BOOKING_TEXT', []) as $key => $label) {
+            $fieldset->add('text', [
+                'id' => $key,
+                'labelClass' => 'g-input icon-edit',
+                'itemClass' => 'item',
+                'label' => $label,
+                'maxlength' => 250,
+                'value' => isset($index->{$key}) ? $index->{$key} : ''
+            ]);
+        }
+        // ตัวเลือก select
         $category = \Booking\Category\Model::init();
         $i = 0;
         foreach (Language::get('BOOKING_SELECT', []) as $key => $label) {
@@ -182,17 +194,19 @@ class View extends \Booking\Tools\View
                 ]);
             }
         }
-        // textbox
-        foreach (Language::get('BOOKING_TEXT', []) as $key => $label) {
-            $fieldset->add('text', [
-                'id' => $key,
-                'labelClass' => 'g-input icon-edit',
-                'itemClass' => 'item',
-                'label' => $label,
-                'maxlength' => 250,
-                'value' => isset($index->{$key}) ? $index->{$key} : ''
+        
+        $groups = $fieldset->add('groups');
+        
+        if (!empty($index->attachment)) {
+            $url = WEB_URL.DATA_FOLDER.'booking/'.$index->attachment;
+            $groups->add('item', [
+                'labelClass' => 'g-input icon-download',
+                'itemClass' => 'width50',
+                'label' => '{LNG_Attached file}',
+                'text' => '<a href="'.$url.'" target="_blank" class="button blue"><span class="icon-download">{LNG_Download}</span></a>'
             ]);
         }
+
 
 
         $fieldset = $form->add('fieldset', [
