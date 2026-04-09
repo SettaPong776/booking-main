@@ -46,7 +46,7 @@ class Controller extends \Booking\Base\Controller
                 'to' => $request->request('to')->date(),
                 'room_id' => $request->request('room_id')->toInt(),
                 'use' => $request->request('use')->toInt(),
-                'status' => $request->request('status', -1, 'bookingReport_status')->toInt(),
+                'status' => $request->request('status', 0, 'bookingReport_status')->toInt(),
                 'booking_status' => Language::get('BOOKING_STATUS')
             ];
             setcookie('bookingReport_status', $params['status'], time() + 2592000, '/', HOST, HTTPS, true);

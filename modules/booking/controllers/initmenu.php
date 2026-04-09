@@ -80,7 +80,28 @@ class Controller extends \Booking\Base\Controller
         $canReportApprove = self::reportApprove($login);
         // สามารถดูรายงานได้ (จอง)
         if ($canReportApprove) {
-            $menu->add('report', '{LNG_Book a room}', 'index.php?module=booking-report', null, 'booking');
+            // นับจำนวนรายการรออนุมัติ
+            $pendingCount = 0;
+            $pendingQuery = static::createQuery()
+                ->selectCount()
+                ->from('reservation')
+                ->where(['status', 0])
+                ->execute();
+            if (!empty($pendingQuery)) {
+                $pendingCount = (int) $pendingQuery[0]->count;
+            }
+            $pendingLabel = $pendingCount > 0 ? 'รออนุมัติ ('.$pendingCount.')' : 'รออนุมัติ';
+            $reportSubmenus = [
+                [
+                    'text' => $pendingLabel,
+                    'url'  => 'index.php?module=booking-report&amp;status=0'
+                ],
+                [
+                    'text' => '{LNG_Report} (ทั้งหมด)',
+                    'url'  => 'index.php?module=booking-report&amp;status=-1'
+                ]
+            ];
+            $menu->add('report', '{LNG_Book a room}', 'index.php?module=booking-report&amp;status=0', $reportSubmenus, 'booking');
         }
     }
 }
