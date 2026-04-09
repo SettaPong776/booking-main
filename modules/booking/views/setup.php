@@ -68,10 +68,12 @@ class View extends \Gcms\View
             /* รายการต่อหน้า */
             'perPage' => $request->cookie('bookingSetup_perPage', 30)->toInt(),
             /* เรียงลำดับ (ใช้ค่าจาก Model) */
+            /* เรียงลำดับเริ่มต้น (ใช้ field custom_order ที่เพิ่มมาจาก Model) */
+            'defaultSort' => 'custom_order ASC, name ASC',
             /* ฟังก์ชั่นจัดรูปแบบการแสดงผลแถวของตาราง */
             'onRow' => [$this, 'onRow'],
             /* คอลัมน์ที่ไม่ต้องแสดงผล */
-            'hideColumns' => ['color'],
+            'hideColumns' => ['color', 'custom_order'],
             /* คอลัมน์ที่สามารถค้นหาได้ */
             'searchColumns' => ['name'],
             /* ตั้งค่าการกระทำของของตัวเลือกต่างๆ ด้านล่างตาราง ซึ่งจะใช้ร่วมกับการขีดถูกเลือกแถว */

@@ -43,8 +43,10 @@ class View extends \Gcms\View
             'perPage' => $request->cookie('bookingRooms_perPage', 30)->toInt(),
             /* ฟังก์ชั่นจัดรูปแบบการแสดงผลแถวของตาราง */
             'onRow' => [$this, 'onRow'],
+            /* เรียงลำดับเริ่มต้น (ใช้ field custom_order ที่เพิ่มมาจาก Model) */
+            'defaultSort' => 'custom_order ASC, name ASC',
             /* คอลัมน์ที่ไม่ต้องแสดงผล */
-            'hideColumns' => ['detail', 'color'],
+            'hideColumns' => ['detail', 'color', 'custom_order'],
             /* ตั้งค่าการกระทำของของตัวเลือกต่างๆ ด้านล่างตาราง ซึ่งจะใช้ร่วมกับการขีดถูกเลือกแถว */
             'action' => 'index.php/booking/model/rooms/action',
             'actionCallback' => 'dataTableActionCallback',

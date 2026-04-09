@@ -33,7 +33,8 @@ class Model extends \Kotchasan\Model
         $select = [
             'R.name',
             'R.id',
-            'R.color'
+            'R.color',
+            "SQL(CASE WHEN R.name LIKE '%ขุมทอง%' THEN 1 WHEN R.name LIKE '%ชั้น 2%' OR R.name LIKE '%ชั้น2%' THEN 2 WHEN R.name LIKE '%อาทิต%' THEN 3 WHEN R.name LIKE '%อักษร%' THEN 5 WHEN R.name LIKE '%สาสนะ%' THEN 6 ELSE 4 END) AS custom_order"
         ];
         $query = static::createQuery()
             ->from('rooms R');
