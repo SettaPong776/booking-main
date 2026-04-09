@@ -34,7 +34,8 @@ class Model extends \Kotchasan\Model
         return static::createQuery()
             ->select('R.id', 'R.name', 'R.detail', 'R.color', 'SQL('.$sortExpr.' AS sort_order)')
             ->from('rooms R')
-            ->where(['R.published', 1]);
+            ->where(['R.published', 1])
+            ->order('SQL('.$sortExpr.')', 'R.name');
     }
 
     /**
