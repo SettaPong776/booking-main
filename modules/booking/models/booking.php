@@ -52,7 +52,7 @@ class Model extends \Kotchasan\Model
                     'name' => $login['name'],
                     'member_id' => $login['id'],
                     'phone' => isset($login['phone']) ? $login['phone'] : '',
-                    'department' => empty($login['department']) ? '' : $login['department'][0]
+                    'department' => ''
                 ];
                 if ($room_id > 0) {
                     $room = static::createQuery()
