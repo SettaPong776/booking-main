@@ -67,8 +67,7 @@ class View extends \Gcms\View
             'model' => \Booking\Setup\Model::toDataTable(),
             /* รายการต่อหน้า */
             'perPage' => $request->cookie('bookingSetup_perPage', 30)->toInt(),
-            /* เรียงลำดับ */
-            'sort' => $request->cookie('bookingSetup_sort', 'id desc')->toString(),
+            /* เรียงลำดับ (ใช้ค่าจาก Model) */
             /* ฟังก์ชั่นจัดรูปแบบการแสดงผลแถวของตาราง */
             'onRow' => [$this, 'onRow'],
             /* คอลัมน์ที่ไม่ต้องแสดงผล */
@@ -109,7 +108,7 @@ class View extends \Gcms\View
         ]);
         // save cookie
         setcookie('bookingSetup_perPage', $table->perPage, time() + 2592000, '/', HOST, HTTPS, true);
-        setcookie('bookingSetup_sort', $table->sort, time() + 2592000, '/', HOST, HTTPS, true);
+        // setcookie('bookingSetup_sort', $table->sort, time() + 2592000, '/', HOST, HTTPS, true);
         // คืนค่า HTML
         return $table->render();
     }

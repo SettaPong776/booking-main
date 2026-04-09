@@ -34,7 +34,7 @@ class Model extends \Kotchasan\Model
             ->select('R.id', 'R.name', 'R.detail', 'R.color')
             ->from('rooms R')
             ->where(['R.published', 1])
-            ->order('R.name');
+            ->order("SQL(CASE WHEN R.name LIKE '%ขุมทอง%' THEN 1 WHEN R.name LIKE '%ชั้น 2%' OR R.name LIKE '%ชั้น2%' THEN 2 WHEN R.name LIKE '%อาทิต%' THEN 3 WHEN R.name LIKE '%อักษร%' THEN 5 WHEN R.name LIKE '%สาสนะ%' THEN 6 ELSE 4 END)", 'R.name');
     }
 
     /**

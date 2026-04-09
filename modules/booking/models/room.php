@@ -40,7 +40,7 @@ class Model
             ->select('id', 'name')
             ->from('rooms')
             ->where($where, 'OR')
-            ->order('name')
+            ->order("SQL(CASE WHEN name LIKE '%ขุมทอง%' THEN 1 WHEN name LIKE '%ชั้น 2%' OR name LIKE '%ชั้น2%' THEN 2 WHEN name LIKE '%อาทิต%' THEN 3 WHEN name LIKE '%อักษร%' THEN 5 WHEN name LIKE '%สาสนะ%' THEN 6 ELSE 4 END)", 'name')
             ->cacheOn();
         $result = [];
         foreach ($query->execute() as $item) {
