@@ -1,28 +1,709 @@
+/* ═══════════════════════════════════════════════════════
+   DARK MODE — Complete Theme Override
+   ═══════════════════════════════════════════════════════ */
+
+/* ── GCSS Framework Variable Overrides ─────────────── */
 :root {
-  --wrapper-background-color: #000000;
-  --background: #000000;
-  --overlay: rgba(255, 255, 255, 0.01);
-  --secondary-background: rgba(0, 0, 0, 0.01);
-  --background-transparent: rgba(255, 255, 255, 0.4);
-  --color: #eeeeee;
-  --border: rgba(255, 255, 255, 0.3);
-  --border-highlight: rgba(0, 0, 0, 0.1);
-  --field: #191C20;
-  --fieldtext: #eeeeee;
-  --shadow: rgba(255, 255, 255, 0.2);
-  --label-bg: rgba(255, 255, 255, 0.05);
-  --label-shadow: rgba(255, 255, 255, 0.1);
-  --th-background-color: rgba(255, 255, 255, 0.2);
-  --th-shadow: #191C20;
-  --disabled-bg: #2D3035;
-  --content-bg: #2D3035;
-  --inputgroups-bg: rgba(255, 255, 255, 0.05);
-  --inputgroups-button: rgba(255, 255, 255, 0.1);
-  --inputgroups-button-highlight: rgba(255, 255, 255, 0.15);
-  --hover-bg: rgba(255, 255, 255, 0.2);
-  --darker-color: rgba(255, 255, 255, 0.05);
-  --faded-color: rgba(0, 0, 0, 0.05);
-  --select-bg: #cccccc;
-  --select-text: #333333;
-  --button: rgba(255, 255, 255, 0.1);
+  --wrapper-background-color: #0f1117;
+  --background: #181a20;
+  --overlay: rgba(255, 255, 255, 0.02);
+  --secondary-background: rgba(255, 255, 255, 0.02);
+  --background-transparent: rgba(0, 0, 0, 0.6);
+  --color: #e2e8f0;
+  --border: rgba(255, 255, 255, 0.10);
+  --border-highlight: rgba(255, 255, 255, 0.06);
+  --field: #1e2028;
+  --fieldtext: #e2e8f0;
+  --shadow: rgba(0, 0, 0, 0.4);
+  --label-bg: rgba(255, 255, 255, 0.04);
+  --label-shadow: rgba(255, 255, 255, 0.06);
+  --th-background-color: rgba(255, 255, 255, 0.06);
+  --th-shadow: #1e2028;
+  --disabled-bg: #262830;
+  --content-bg: #1e2028;
+  --inputgroups-bg: rgba(255, 255, 255, 0.04);
+  --inputgroups-button: rgba(255, 255, 255, 0.08);
+  --inputgroups-button-highlight: rgba(255, 255, 255, 0.12);
+  --hover-bg: rgba(255, 255, 255, 0.08);
+  --darker-color: rgba(255, 255, 255, 0.04);
+  --faded-color: rgba(0, 0, 0, 0.15);
+  --select-bg: #818cf8;
+  --select-text: #ffffff;
+  --button: rgba(255, 255, 255, 0.06);
+  --light-color: #64748b;
+  --highlight-row: rgba(255, 255, 255, 0.03);
+
+  /* ── Booking Theme Token Overrides ───────────────── */
+  --primary: #818cf8;
+  --primary-light: #a78bfa;
+  --primary-dark: #6366f1;
+  --primary-glow: rgba(129, 140, 248, 0.15);
+  --accent: #a78bfa;
+  --accent-light: #c4b5fd;
+  --surface: #1e2028;
+  --surface-2: #252730;
+  --surface-3: #2a2d38;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --shadow-xs: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -1px rgba(0,0,0,0.2);
+  --shadow-md: 0 10px 25px -5px rgba(0,0,0,0.4), 0 4px 6px -2px rgba(0,0,0,0.2);
+  --shadow-lg: 0 20px 40px -8px rgba(0,0,0,0.5), 0 10px 10px -5px rgba(0,0,0,0.2);
+}
+
+/* ── Body & Background ─────────────────────────────── */
+body {
+  background-color: #0f1117 !important;
+  color: #e2e8f0;
+}
+
+/* ── Page Background — remove dotted grid ──────────── */
+.bg_color {
+  background-color: #0f1117 !important;
+  background-image: none !important;
+}
+
+/* ── Hero Banner ───────────────────────────────────── */
+.hero-banner {
+  background: linear-gradient(135deg, #312e81 0%, #4338ca 40%, #5b21b6 100%) !important;
+}
+
+/* ── Footer ────────────────────────────────────────── */
+.footer {
+  background: linear-gradient(to right, #1a1c24, #1e2028) !important;
+  border-top-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.footer p {
+  color: #64748b !important;
+}
+
+/* ── Main Content Sections ─────────────────────────── */
+main > section {
+  background-color: #1e2028 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ── Header / Navbar ───────────────────────────────── */
+header.header {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ── Breadcrumbs ───────────────────────────────────── */
+.breadcrumbs {
+  background-color: #252730 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ── Section Headers ───────────────────────────────── */
+section > header {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ── Tables ────────────────────────────────────────── */
+.tablebody table thead th {
+  background-color: #252730 !important;
+  color: #94a3b8 !important;
+}
+
+.tablebody tbody td,
+.tablebody tbody th {
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.tablebody tbody tr:hover td,
+.tablebody tbody tr:hover th {
+  background-color: #252730 !important;
+}
+
+tr.bg2 {
+  background-color: #252730 !important;
+}
+
+tr.bg3 {
+  background-color: rgba(217, 119, 6, 0.08) !important;
+}
+
+table.database tfoot tr,
+table.database thead tr {
+  background-color: #252730 !important;
+}
+
+table.database th {
+  background-color: #252730 !important;
+}
+
+table.database td,
+table.database th {
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ── Tab Menus ─────────────────────────────────────── */
+.tab_menus > li {
+  background-color: #1e2028 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+}
+
+.tab_menus > li:hover > ul {
+  background-color: #1e2028 !important;
+  border-color: rgba(255, 255, 255, 0.10) !important;
+}
+
+.tab_menus ul {
+  color: #e2e8f0 !important;
+}
+
+/* ── Writetab ──────────────────────────────────────── */
+.writetab > ul > li > a {
+  background-color: #252730 !important;
+}
+
+.writetab > ul > li.select > a {
+  background-color: #1e2028 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ── Quick Menu ────────────────────────────────────── */
+.qmenu a {
+  background-color: #1e2028 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ── Modal ─────────────────────────────────────────── */
+#GModal_modaldiv .modaldiv {
+  background-color: #1e2028 !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6) !important;
+}
+
+.modaldiv article,
+.modaldiv form {
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.modaldiv header {
+  background: linear-gradient(135deg, #312e81 0%, #4338ca 100%) !important;
+}
+
+/* ── Charts ────────────────────────────────────────── */
+.ggraphs {
+  background-color: #1e2028 !important;
+}
+
+/* ── Info Button (outline style) ───────────────────── */
+.button.icon-info {
+  background: #252730 !important;
+  color: #a78bfa !important;
+  border-color: rgba(129, 140, 248, 0.3) !important;
+}
+
+.button.icon-info:hover {
+  background: #2a2d38 !important;
+  border-color: #818cf8 !important;
+  color: #c4b5fd !important;
+}
+
+/* ── Filter / Search Bar ───────────────────────────── */
+fieldset.search {
+  background: #252730 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ── Language Menu ─────────────────────────────────── */
+.language-menu ul {
+  background-color: rgba(30, 32, 40, 0.95) !important;
+  backdrop-filter: blur(10px);
+}
+
+.language-menu:hover ul {
+  border-color: rgba(255, 255, 255, 0.10) !important;
+}
+
+/* ── Login Form ────────────────────────────────────── */
+@media only screen and (min-width: 601px) {
+  #login_div form {
+    background-color: #1e2028 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+}
+
+#login_div h3 {
+  color: #818cf8 !important;
+}
+
+#login_div label {
+  color: #94a3b8 !important;
+}
+
+/* ── Form Inputs ───────────────────────────────────── */
+.radiogroups.g-input,
+.radiogroups label,
+.checkboxgroups.g-input,
+.checkboxgroups label,
+.g-file ~ input[type="text"],
+.input-select,
+input,
+select,
+textarea,
+option,
+button {
+  background-color: #1e2028 !important;
+  color: #e2e8f0 !important;
+}
+
+/* Fix select option background for dark dropdowns */
+option {
+  background-color: #252730 !important;
+  color: #e2e8f0 !important;
+}
+
+/* ── Edit Inplace ──────────────────────────────────── */
+.editinplace_list .editinplace {
+  border-color: transparent transparent rgba(255, 255, 255, 0.15) transparent !important;
+}
+
+.editinplace_list [type="text"] {
+  background-color: transparent !important;
+  border-color: transparent transparent rgba(255, 255, 255, 0.15) transparent !important;
+}
+
+/* ── Setup Form Legend ─────────────────────────────── */
+.setup_frm > form > fieldset > legend > span,
+.setup_frm > fieldset > legend > span,
+main h3 {
+  color: #818cf8 !important;
+}
+
+/* ── Section Page Titles ───────────────────────────── */
+section > header h2 {
+  color: #818cf8 !important;
+}
+
+section > header h2::before {
+  color: #a78bfa !important;
+}
+
+/* ── Form Labels ───────────────────────────────────── */
+.g-input > label,
+fieldset label {
+  color: #94a3b8 !important;
+}
+
+/* ── Pagination ────────────────────────────────────── */
+.g-pagination a:hover {
+  background: #2a2d38 !important;
+}
+
+.splitpage a,
+.splitpage span {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #94a3b8 !important;
+  background: #1e2028 !important;
+}
+
+.splitpage a:hover {
+  background: #2a2d38 !important;
+  color: #818cf8 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* ── Room links / legend ───────────────────────────── */
+#room_links .item {
+  background: #252730 !important;
+  border-color: rgba(255, 255, 255, 0.10) !important;
+  color: #a78bfa !important;
+}
+
+#room_links .item:hover {
+  background: #2a2d38 !important;
+  border-color: #818cf8 !important;
+  color: #c4b5fd !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   BOOKING MODULE — Dark Mode Overrides
+   ══════════════════════════════════════════════════════ */
+
+/* ── Calendar Container ────────────────────────────── */
+.event-calendar {
+  background: #1e2028 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ── Calendar Nav ──────────────────────────────────── */
+.event-calendar nav {
+  background: linear-gradient(135deg, #312e81 0%, #4338ca 60%, #5b21b6 100%) !important;
+}
+
+.event-calendar nav label.curr select option {
+  background: #312e81 !important;
+  color: #fff !important;
+}
+
+/* ── Calendar Table Headers ────────────────────────── */
+.event-calendar thead th {
+  color: #94a3b8 !important;
+  background: #252730 !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.event-calendar thead th:first-child {
+  color: #fca5a5 !important;
+}
+
+.event-calendar thead th:last-child {
+  color: #a78bfa !important;
+}
+
+/* ── Calendar Day Cells ────────────────────────────── */
+.event-calendar tbody td {
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.event-calendar tbody td:hover {
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+.event-calendar tbody td > span {
+  color: #94a3b8 !important;
+}
+
+.event-calendar tbody td.curr > span {
+  color: #a78bfa !important;
+}
+
+.event-calendar tbody td.ex {
+  background: rgba(0, 0, 0, 0.15) !important;
+}
+
+.event-calendar tbody td.ex > span {
+  color: #4a5568 !important;
+}
+
+/* Today */
+.event-calendar tbody td.today {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(129, 140, 248, 0.06) 100%) !important;
+}
+
+.event-calendar tbody td.today > span {
+  background: linear-gradient(135deg, #6366f1, #818cf8) !important;
+  color: #ffffff !important;
+}
+
+/* Holiday */
+.event-calendar tbody td.holiday {
+  background: rgba(217, 119, 6, 0.06) !important;
+}
+
+/* Mark */
+.event-calendar tbody td.mark > span {
+  color: #a78bfa !important;
+}
+
+/* ── Calendar Modal/Popup ──────────────────────────── */
+.event-calendar-modal {
+  background: #1e2028 !important;
+  border-color: rgba(255, 255, 255, 0.10) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+.event-calendar-modal h1 {
+  background: linear-gradient(135deg, #312e81 0%, #4338ca 100%) !important;
+}
+
+.event-calendar-modal .closebtn {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ── Calendar Month Buttons ────────────────────────── */
+.event-calendar-buttons .button {
+  background: #252730 !important;
+  color: #a78bfa !important;
+  border-color: rgba(255, 255, 255, 0.10) !important;
+}
+
+.event-calendar-buttons .button:hover {
+  background: #2a2d38 !important;
+}
+
+.event-calendar-buttons .button.select {
+  background: linear-gradient(135deg, #6366f1, #818cf8) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+/* ── Calendar Room Links ───────────────────────────── */
+#room_links {
+  border-top-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.calendar_links a.item {
+  background: #252730 !important;
+  border-color: rgba(255, 255, 255, 0.10) !important;
+  color: #a78bfa !important;
+}
+
+.calendar_links a.item:hover {
+  background: #2a2d38 !important;
+  border-color: #818cf8 !important;
+  color: #c4b5fd !important;
+}
+
+/* ── Room Cards ────────────────────────────────────── */
+.room-card {
+  background: #1e2028 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.room-card:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+.room-card-img {
+  background: #252730 !important;
+}
+
+.room-card-name {
+  color: #e2e8f0 !important;
+}
+
+.room-card-detail {
+  color: #94a3b8 !important;
+}
+
+/* ── Room Calendar Page ────────────────────────────── */
+.room-calendar-info {
+  background: #1e2028 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.room-calendar-img {
+  background: #252730 !important;
+}
+
+.room-calendar-detail h3 {
+  color: #e2e8f0 !important;
+}
+
+.room-calendar-detail p {
+  color: #94a3b8 !important;
+}
+
+.room-calendar-hint {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(79, 70, 229, 0.06) 100%) !important;
+  border-color: rgba(129, 140, 248, 0.2) !important;
+  color: #a78bfa !important;
+}
+
+.room-calendar-hint .icon-info::before {
+  color: #818cf8 !important;
+}
+
+.room-calendar-page .event-calendar tbody td.curr:hover {
+  background: rgba(129, 140, 248, 0.08) !important;
+}
+
+/* ── Modal Detail ──────────────────────────────────── */
+.modal_detail table tbody th {
+  color: #818cf8 !important;
+}
+
+.modal_detail .bg {
+  background-color: #252730 !important;
+}
+
+#booking_rooms {
+  background-color: #1e2028 !important;
+}
+
+/* ── Room Gallery ──────────────────────────────────── */
+.room-gallery-main {
+  background: #252730 !important;
+}
+
+.room-gallery-thumbs {
+  scrollbar-color: #4338ca #252730 !important;
+}
+
+.room-gallery-thumb:hover {
+  border-color: #818cf8 !important;
+}
+
+.room-gallery-thumb.active {
+  border-color: #6366f1 !important;
+}
+
+/* ── Room Image Upload ─────────────────────────────── */
+.room-images-comment {
+  color: #64748b !important;
+}
+
+.room-img-item {
+  background: #252730 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.room-img-add-btn {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(79, 70, 229, 0.06) 100%) !important;
+  border-color: rgba(129, 140, 248, 0.3) !important;
+  color: #a78bfa !important;
+}
+
+.room-img-add-btn:hover {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(79, 70, 229, 0.10)) !important;
+  border-color: #6366f1 !important;
+}
+
+.room-img-slots {
+  color: #64748b !important;
+}
+
+.room-img-slots span {
+  color: #a78bfa !important;
+}
+
+/* ── Booking Page Header ───────────────────────────── */
+.setup_frm > header h2.icon-calendar {
+  color: #818cf8 !important;
+}
+
+.setup_frm > header h2.icon-calendar::before {
+  color: #a78bfa !important;
+}
+
+/* ── Responsive / Tablet - writetab dark fix ──────── */
+@media only screen and (max-width: 960px) {
+  .writetab > ul > li.select > a {
+    background-color: #2a2d38 !important;
+    border-bottom-color: #2a2d38 !important;
+  }
+
+  .writetab > ul > li > a,
+  .writetab > ul {
+    background-color: #1e2028 !important;
+  }
+}
+
+/* ── Scrollbar Styling ─────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f1117;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+/* ── Selection Highlight ───────────────────────────── */
+::selection {
+  background: rgba(129, 140, 248, 0.3);
+  color: #ffffff;
+}
+
+/* ── Table Action Nav (ทำกับที่เลือก) ──────────────── */
+.table_nav.action {
+  background: #252730 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border: none !important;
+  border-radius: 0 0 8px 8px !important;
+  padding: 12px 16px !important;
+  margin-top: 0 !important;
+  box-shadow: none !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.table_nav.action select {
+  background: #1e2028 !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #e2e8f0 !important;
+  border-radius: 6px !important;
+  height: 38px !important;
+  padding: 0 12px !important;
+  min-width: 160px !important;
+  font-family: inherit !important;
+  cursor: pointer !important;
+}
+
+.table_nav.action button,
+.table_nav.action label.button,
+.table_nav.action input[type="submit"] {
+  background: linear-gradient(135deg, #6366f1, #818cf8) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  height: 38px !important;
+  line-height: 38px !important;
+  padding: 0 24px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3) !important;
+  transition: all 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.table_nav.action label.button span {
+  color: #ffffff !important;
+  font-family: inherit !important;
+}
+
+.table_nav.action button:hover,
+.table_nav.action label.button:hover,
+.table_nav.action input[type="submit"]:hover {
+  background: linear-gradient(135deg, #4f46e5, #6366f1) !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ── SweetAlert2 Dark Override ─────────────────────── */
+.swal2-popup {
+  background: #1e2028 !important;
+  color: #e2e8f0 !important;
+}
+
+.swal2-title {
+  color: #e2e8f0 !important;
+}
+
+.swal2-html-container {
+  color: #94a3b8 !important;
+}
+
+.swal2-input,
+.swal2-textarea,
+.swal2-select {
+  background: #252730 !important;
+  color: #e2e8f0 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* ── Smooth transition for theme switching ─────────── */
+body,
+main > section,
+.event-calendar,
+.room-card,
+.tab_menus > li,
+.qmenu a,
+.footer,
+header.header {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }

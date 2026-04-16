@@ -82,13 +82,11 @@ class View extends \Booking\Tools\View
                     'options' => [0 => '{LNG_all items}'] + $this->category->toSelect($key),
                     'value' => $params[$key]
                 ];
-                $this->topic[] = $label;
                 $this->topic[$key] = '';
                 $hideColumns[] = $label;
             }
         }
         foreach (Language::get('BOOKING_TEXT', []) as $key => $label) {
-            $this->topic[] = $label;
             $this->topic[$key] = '';
             $hideColumns[] = $label;
         }
@@ -173,9 +171,10 @@ class View extends \Booking\Tools\View
             /* ปุ่มแสดงในแต่ละแถว */
             'buttons' => [
                 'edit' => [
-                    'class' => 'icon-valid button green notext',
+                    'class' => 'icon-valid button save',
                     'href' => $uri->createBackUri(['module' => 'booking-approve', 'id' => ':id']),
-                    'title' => '{LNG_Approve}/{LNG_Edit}'
+                    'title' => '{LNG_Approve} {LNG_Book a room}',
+                    'text' => '{LNG_Approve} {LNG_Book a room}'
                 ]
             ]
         ]);

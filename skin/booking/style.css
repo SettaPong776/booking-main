@@ -1937,49 +1937,78 @@ button.go:hover {
 
 /* Table nav action bar (ทำกับที่เลือก row) */
 .table_nav.action {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 4px;
-  flex-wrap: wrap;
+  background: var(--surface) !important;
+  border-top: 1px solid var(--border-subtle) !important;
+  padding: 12px 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-top: 0 !important;
 }
 
 .table_nav.action > div {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
+.table_nav.action fieldset {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+}
+
 .table_nav.action select {
-  height: 36px !important;
-  border-radius: var(--radius-sm) !important;
-  border: 1.5px solid var(--border-medium) !important;
-  padding: 0 10px !important;
+  height: 38px !important;
+  border-radius: 6px !important;
+  border: 1px solid var(--border-medium) !important;
+  padding: 0 12px !important;
   font-size: 0.875rem !important;
   color: var(--text-primary) !important;
   background-color: var(--surface) !important;
-  min-width: 140px !important;
+  min-width: 160px !important;
+  cursor: pointer !important;
 }
 
+.table_nav.action label.button,
 .table_nav.action input[type="submit"],
 .table_nav.action button[type="submit"],
 .table_nav.action button:not(.float_button) {
   background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
   color: #ffffff !important;
   border: none !important;
-  border-radius: var(--radius-sm) !important;
-  padding: 0 16px !important;
-  height: 36px !important;
+  border-radius: 6px !important;
+  padding: 0 24px !important;
+  height: 38px !important;
+  line-height: 38px !important;
   font-size: 0.875rem !important;
   font-weight: 600 !important;
-  font-family: 'Sarabun', 'THSarabunNew', Tahoma, sans-serif !important;
+  font-family: inherit !important;
   cursor: pointer !important;
   white-space: nowrap !important;
   box-shadow: 0 2px 6px rgba(99, 102, 241, 0.25) !important;
   transition: all var(--transition) !important;
   display: inline-flex !important;
   align-items: center !important;
+  justify-content: center !important;
+}
+
+.table_nav.action label.button span {
+  color: #ffffff !important;
+  font-family: inherit !important;
+}
+
+.table_nav.action label.button:hover,
+.table_nav.action input[type="submit"]:hover,
+.table_nav.action button:hover {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary)) !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35) !important;
+  transform: translateY(-1px) !important;
 }
 
 /* Calendar nav « » — styled as button pills (they are <a> text links in the DOM) */
