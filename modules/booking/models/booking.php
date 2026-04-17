@@ -140,6 +140,16 @@ class Model extends \Kotchasan\Model
                     if ($save['attendees'] == 0) {
                         // ไม่ได้กรอก attendees
                         $ret['ret_attendees'] = 'Please fill in';
+                    } else {
+                        // ตรวจสอบความจุของห้อง
+                        $room = $this->db()->createQuery()
+                            ->from('rooms R')
+                            ->join('rooms_meta M', 'LEFT', [['M.room_id', 'R.id'], ['M.name', 'seats']])
+                            ->where(['R.id', $save['room_id']])
+                            ->first('R.name', 'M.value seats');
+                        if ($room && !empty($room->seats) && $save['attendees'] > (int) $room->seats) {
+                            $ret['ret_attendees'] = sprintf(Language::get('%s รองรับได้แค่ %s /คน'), $room->name, $room->seats);
+                        }
                     }
                     // ยกเลิกการตรวจสอบสังกัดแผนกตามความต้องการ
                     // if (empty($login['department'])) {
