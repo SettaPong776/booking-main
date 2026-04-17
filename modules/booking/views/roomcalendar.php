@@ -95,6 +95,12 @@ class View extends \Gcms\View
             'class' => 'room-calendar-hint',
             'innerHTML' => '<span class="icon-info"></span> {LNG_Click on date to book this room}'
         ]);
+        // Legend
+        $room_detail->add('div', [
+            'class' => 'room-calendar-legend',
+            'innerHTML' => '<div><span class="room-color-dot" style="background-color:#FF0000"></span> <span>{LNG_สีแดง คือ จองแล้ว อยู่ระหว่างรอตรวจสอบยืนยัน}</span></div>' .
+                           '<div><span class="room-color-dot" style="background-color:'.$room->color.'"></span> <span>{LNG_สีตามห้องประชุม คือ การจองได้รับการอนุมัติแล้ว}</span></div>'
+        ]);
         // ปฏิทิน
         $section->add('div', [
             'id' => 'booking-calendar'

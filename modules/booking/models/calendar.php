@@ -69,10 +69,10 @@ class Model extends \Kotchasan\Model
     public static function get($params, &$events)
     {
         $query = \Kotchasan\Model::createQuery()
-            ->select('V.id', 'V.topic', 'V.begin', 'V.end', 'R.color')
+            ->select('V.id', 'V.topic', 'V.begin', 'V.end', 'V.status', 'R.color')
             ->from('reservation V')
             ->join('rooms R', 'INNER', ['R.id', 'V.room_id'])
-            ->where(['V.status', self::$cfg->booking_calendar_status])
+            ->where(['V.status', [0, 1]])
             ->andWhere([
                 Sql::create("V.`begin`>='$params[from]' AND V.`begin`<='$params[to]'"),
                 Sql::create("V.`end`>='$params[from]' AND V.`end`<='$params[to]'")
@@ -88,7 +88,7 @@ class Model extends \Kotchasan\Model
                 'title' => self::title($item),
                 'start' => $item->begin,
                 'end' => $item->end,
-                'color' => $item->color,
+                'color' => $item->status == 1 ? $item->color : '#FF0000',
                 'class' => 'icon-calendar'
             ];
         }
