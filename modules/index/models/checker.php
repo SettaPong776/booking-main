@@ -32,7 +32,7 @@ class Model extends \Kotchasan\Model
             try {
                 // ค่าที่ส่งมา
                 $id = self::$request->post('id')->toInt();
-                $value = self::$request->post('value')->url();
+                $value = self::$request->post('value')->username();
                 if (count(self::$cfg->login_fields) == 1 && in_array('email', self::$cfg->login_fields) && !Validator::email($value)) {
                     // อีเมล์เท่านั้น ตรวจสอบ Email
                     echo Language::replace('Invalid :name', [':name' => Language::get('Email')]);

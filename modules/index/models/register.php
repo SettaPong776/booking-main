@@ -163,7 +163,7 @@ class Model extends \Kotchasan\Model
                             $err = \Index\Email\Model::send($save, $password);
                             if ($err != '') {
                                 // คืนค่า error
-                                $ret['alert'] = $err;
+                                $ret['alert'] = Language::get($err);
                             } elseif (!empty($save['activatecode'])) {
                                 // activate
                                 $ret['alert'] = Language::replace('Registered successfully Please check your email :email and click the link to verify your email.', [':email' => $save['username']]);

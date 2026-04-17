@@ -371,8 +371,8 @@ class Text
             return '';
         }
 
-        // Remove non-alphanumeric characters, @, ., -, and _ from the username
-        $sanitizedText = preg_replace('/[^a-zA-Z0-9@\.\-_]+/', '', $text);
+        // Remove non-alphanumeric characters, @, ., -, _, and Thai characters from the username
+        $sanitizedText = preg_replace('/[^a-zA-Z0-9@\.\-_ก-๙]+/u', '', $text);
 
         return $sanitizedText;
     }

@@ -224,7 +224,7 @@ class View extends \Booking\Tools\View
             if ($canEdit) {
                 // submit
                 $fieldset->add('submit', [
-                    'class' => 'button blue large icon-save border',
+                    'class' => 'button ok large icon-save border',
                     'value' => '{LNG_Save}'
                 ]);
             }

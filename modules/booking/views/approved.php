@@ -123,7 +123,7 @@ class View extends \Booking\Tools\View
         ]);
         // submit
         $fieldset->add('submit', [
-            'class' => 'button save large icon-save',
+            'class' => 'button ok large icon-save',
             'value' => '{LNG_Save}'
         ]);
         // id

@@ -298,7 +298,7 @@ return array(
   ),
   'Reason' => 'เหตุผล',
   'Register' => 'สมัครสมาชิก',
-  'Register successfully Please log in' => 'ลงทะเบียนเรียบร้อยแล้วกรุณาเข้าสู่ระบบ',
+  'Register successfully Please log in' => 'สมัครสมาชิกสำเร็จ กรุณา กดเข้าสู่ระบบเพื่อล็อกอินเข้าใช้งาน และ โปรดกรอกอีเมล์ ในหน้าแก้ไขข้อมูลส่วนตัว เพื่อใช้ในการกู้คืนบัญชี กรณีลืมรหัสผ่าน',
   'Register successfully, We have sent complete registration information to :email' => 'ลงทะเบียนสมาชิกใหม่เรียบร้อย เราได้ส่งข้อมูลการลงทะเบียนไปยัง :email',
   'Registered successfully Please check your email :email and click the link to verify your email.' => 'ลงทะเบียนเรียบร้อย กรุณาตรวจสอบอีเมล์ :email และคลิงลิงค์ยืนยันอีเมล',
   'Remember me' => 'จำการเข้าระบบ',
@@ -434,5 +434,6 @@ return array(
   'Your new password is' => 'รหัสผ่านใหม่ของคุณคือ',
   'Your OTP code is :otp. Please enter this code on the website to confirm your phone number.' => 'รหัส OTP ของคุณคือ :otp กรุณาป้อนรหัสนี้บนเว็บไซต์เพื่อยืนยันหมายเลขโทรศัพท์ของคุณ',
   'Your registration information' => 'ข้อมูลการลงทะเบียนของคุณ',
-  'Zipcode' => 'รหัสไปรษณีย์'
+  'Zipcode' => 'รหัสไปรษณีย์',
+  'You must provide at least one recipient email address.' => 'สมัครสมาชิกสำเร็จ กรุณา กดเข้าสู่ระบบเพื่อล็อกอินเข้าใช้งาน และ โปรดกรอกอีเมล์ ในหน้าแก้ไขข้อมูลส่วนตัว เพื่อใช้ในการกู้คืนบัญชี กรณีลืมรหัสผ่าน'
 );
