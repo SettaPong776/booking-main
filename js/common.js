@@ -186,9 +186,6 @@ function defaultSubmit(ds) {
       }
     }
   }
-  if (_alert != '') {
-    alert(_alert);
-  }
   if (_input) {
     _input.focus();
     var tag = _input.tagName.toLowerCase();
@@ -202,30 +199,26 @@ function defaultSubmit(ds) {
       }
     }
   }
-  if (_eval) {
-    eval(_eval);
-  }
-  if (_location) {
-    if (_location == 'reload') {
-      if (loader) {
-        loader.reload();
-      } else {
+
+  function executeAfterAlert() {
+    if (_eval) {
+      eval(_eval);
+    }
+    if (_location) {
+      if (_location == 'reload' || _location == 'refresh') {
         window.location.reload();
-      }
-    } else if (_location == 'refresh') {
-      window.location.reload();
-    } else if (_location == 'back') {
-      if (loader) {
-        loader.back();
-      } else {
+      } else if (_location == 'back') {
         window.history.go(-1);
+      } else {
+        window.location = _location.replace(/&amp;/g, '&');
       }
-    } else if (loader && _location != _url) {
-      loader.location(_location);
-    } else {
-      window.location = _location.replace(/&amp;/g, '&');
     }
   }
+
+  if (_alert != '') {
+    alert(_alert);
+  }
+  executeAfterAlert();
 }
 
 function doFormSubmit(xhr) {

@@ -89,7 +89,6 @@ class View extends \Booking\Tools\View
             'itemClass' => 'item',
             'value' => $index['reason']
         ]);
-        
         // attachment upload
         $fieldset->add('file', [
             'id' => 'attachment',
@@ -99,15 +98,24 @@ class View extends \Booking\Tools\View
             'comment' => '{LNG_Browse file} (pdf, doc, docx, xls, xlsx)',
             'accept' => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png', 'zip', 'rar']
         ]);
-        
         if (!empty($index['attachment'])) {
             $url = WEB_URL.DATA_FOLDER.'booking/'.$index['attachment'];
-            $fieldset->add('item', [
-                'labelClass' => 'g-input icon-download',
-                'itemClass' => 'item',
-                'label' => '{LNG_Attached file}',
-                'text' => '<a href="'.$url.'" target="_blank" class="button blue"><span class="icon-download">{LNG_Download}</span></a>'
-            ]);
+            $ext = strtolower(pathinfo($index['attachment'], PATHINFO_EXTENSION));
+            if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
+                $fieldset->add('item', [
+                    'labelClass' => 'g-input icon-download',
+                    'itemClass' => 'item',
+                    'label' => '{LNG_Attached file}',
+                    'text' => '<button type="button" class="button blue" onclick="roomGalleryOpenSingle(\''.$url.'\')"><span class="icon-search">{LNG_Show}</span></button>'
+                ]);
+            } else {
+                $fieldset->add('item', [
+                    'labelClass' => 'g-input icon-download',
+                    'itemClass' => 'item',
+                    'label' => '{LNG_Attached file}',
+                    'text' => '<a href="'.$url.'" target="_blank" class="button blue"><span class="icon-download">{LNG_Download}</span></a>'
+                ]);
+            }
         }
 
         $fieldset = $form->add('fieldset', [

@@ -133,10 +133,11 @@ class Model extends \Kotchasan\Model
                     } elseif ($action === 'approve') {
                         // ปรับสถานะ
                         $index = $this->createQuery()
-                            ->from('reservation')
-                            ->where(['id', $request->post('id')->toInt()])
+                            ->from('reservation V')
+                            ->join('reservation_data M', 'LEFT', [['M.reservation_id', 'V.id'], ['M.name', 'attachment']])
+                            ->where(['V.id', $request->post('id')->toInt()])
                             ->toArray()
-                            ->first();
+                            ->first('V.*', 'M.value attachment');
                         if ($index) {
                             $status = $request->post('status')->toInt();
                             // ฟอร์มอนุมัติ

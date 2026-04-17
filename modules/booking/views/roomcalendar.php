@@ -43,15 +43,16 @@ class View extends \Gcms\View
         $images = \Booking\Write\Model::getRoomImages($room->id);
         if (!empty($images)) {
             if (count($images) === 1) {
+                $singleImgHtml = '<img src="'.$images[0]['url'].'" alt="'.htmlspecialchars($room->name).'" style="cursor:pointer" onclick="roomGalleryOpenSingle(\''.$images[0]['url'].'\')">'; 
                 $room_info->add('div', [
                     'class' => 'room-calendar-img',
-                    'innerHTML' => '<img src="'.$images[0]['url'].'" alt="'.htmlspecialchars($room->name).'">'
+                    'innerHTML' => $singleImgHtml
                 ]);
             } else {
                 $galleryHtml = '<div class="room-gallery room-gallery-inline" id="room_gallery_cal_'.$room->id.'">';
                 $galleryHtml .= '<div class="room-gallery-main">';
                 $galleryHtml .= '<button type="button" class="room-gallery-prev" onclick="roomGalleryNav(\'cal_'.$room->id.'\', -1)">&#10094;</button>';
-                $galleryHtml .= '<img id="room_gallery_img_cal_'.$room->id.'" src="'.$images[0]['url'].'" alt="'.htmlspecialchars($room->name).'">';
+                $galleryHtml .= '<img id="room_gallery_img_cal_'.$room->id.'" src="'.$images[0]['url'].'" alt="'.htmlspecialchars($room->name).'" style="cursor:pointer" onclick="roomGalleryOpenLightbox(\'cal_'.$room->id.'\')">';
                 $galleryHtml .= '<button type="button" class="room-gallery-next" onclick="roomGalleryNav(\'cal_'.$room->id.'\', 1)">&#10095;</button>';
                 $galleryHtml .= '<div class="room-gallery-counter"><span id="room_gallery_num_cal_'.$room->id.'">1</span> / '.count($images).'</div>';
                 $galleryHtml .= '</div>';

@@ -220,6 +220,14 @@ class View extends \Booking\Tools\View
             $fieldset = $form->add('fieldset', [
                 'class' => 'submit'
             ]);
+            
+            if ($canEdit) {
+                // submit
+                $fieldset->add('submit', [
+                    'class' => 'button blue large icon-save border',
+                    'value' => '{LNG_Save}'
+                ]);
+            }
 
             $booking_status = Language::get('BOOKING_STATUS');
             // อนุมัติ

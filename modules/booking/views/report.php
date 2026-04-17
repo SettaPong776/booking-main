@@ -219,6 +219,7 @@ class View extends \Booking\Tools\View
         }
         $item['topic'] = '<div class=two_lines><b>'.$item['topic'].'</b><small class=block>'.implode(' ', $this->topic).'</small></div>';
         $item['reason'] = '<span class="two_lines small" title="'.$item['reason'].'">'.$item['reason'].'</span>';
+        $item['status_id'] = $item['status'];
         $item['status'] = self::showStatus($this->status, $item['status']);
         return $item;
     }
@@ -235,6 +236,9 @@ class View extends \Booking\Tools\View
     public function onCreateButton($btn, $attributes, $item)
     {
         if ($btn == 'edit') {
+            if ($item['status'] != 0) {
+                return false;
+            }
             if (empty(self::$cfg->booking_approving) && $item['today'] == 2) {
                 return false;
             } elseif (self::$cfg->booking_approving == 1 && $item['remain'] < 0) {

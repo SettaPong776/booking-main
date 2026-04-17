@@ -674,28 +674,6 @@ fieldset label {
   transform: translateY(-1px) !important;
 }
 
-/* ── SweetAlert2 Dark Override ─────────────────────── */
-.swal2-popup {
-  background: #1e2028 !important;
-  color: #e2e8f0 !important;
-}
-
-.swal2-title {
-  color: #e2e8f0 !important;
-}
-
-.swal2-html-container {
-  color: #94a3b8 !important;
-}
-
-.swal2-input,
-.swal2-textarea,
-.swal2-select {
-  background: #252730 !important;
-  color: #e2e8f0 !important;
-  border-color: rgba(255, 255, 255, 0.15) !important;
-}
-
 /* ── Smooth transition for theme switching ─────────── */
 body,
 main > section,

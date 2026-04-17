@@ -38,13 +38,13 @@ class View extends \Gcms\View
         if (!empty($images)) {
             if (count($images) === 1) {
                 // แสดงรูปเดียว
-                $content .= '<figure class="center"><img src="'.$images[0]['url'].'" alt="'.htmlspecialchars($order->name).'"></figure>';
+                $content .= '<figure class="center"><img src="'.$images[0]['url'].'" alt="'.htmlspecialchars($order->name).'" style="cursor:pointer" onclick="roomGalleryOpenSingle(\''.$images[0]['url'].'\')">' . '</figure>';
             } else {
                 // แสดง gallery slider
                 $content .= '<div class="room-gallery" id="room_gallery_'.$order->id.'">';
                 $content .= '<div class="room-gallery-main">';
                 $content .= '<button type="button" class="room-gallery-prev" onclick="roomGalleryNav('.$order->id.', -1)">&#10094;</button>';
-                $content .= '<img id="room_gallery_img_'.$order->id.'" src="'.$images[0]['url'].'" alt="'.htmlspecialchars($order->name).'">';
+                $content .= '<img id="room_gallery_img_'.$order->id.'" src="'.$images[0]['url'].'" alt="'.htmlspecialchars($order->name).'" style="cursor:pointer" onclick="roomGalleryOpenLightbox('.$order->id.')">';
                 $content .= '<button type="button" class="room-gallery-next" onclick="roomGalleryNav('.$order->id.', 1)">&#10095;</button>';
                 $content .= '<div class="room-gallery-counter"><span id="room_gallery_num_'.$order->id.'">1</span> / '.count($images).'</div>';
                 $content .= '</div>';

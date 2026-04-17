@@ -89,11 +89,9 @@ function initBookingApprove() {
   var doApprove = function() {
     var id = floatval($E('id').value),
       value = this.id.replace('change_status', '');
-    if (confirm(trans("YOU_WANT_TO_XXX").replace("XXX", this.innerHTML))) {
-      if (id > 0) {
-        let q = 'action=approve&id=' + id + '&status=' + value;
-        send(WEB_URL + 'index.php/booking/model/report/action', q, doFormSubmit, this)
-      }
+    if (id > 0) {
+      let q = 'action=approve&id=' + id + '&status=' + value;
+      send(WEB_URL + 'index.php/booking/model/report/action', q, doFormSubmit, this)
     }
   };
   callClick('change_status1', doApprove);
@@ -166,6 +164,105 @@ function roomGalleryGoto(galleryId, index) {
       thumbs[i].classList.toggle('active', i === index);
     }
   }
+  // Update lightbox if open
+  var lbImg = document.getElementById('room_lightbox_img');
+  var lbNum = document.getElementById('room_lightbox_num');
+  if (lbImg && document.getElementById('room_lightbox')) {
+    lbImg.style.opacity = '0';
+    setTimeout(function() {
+      lbImg.src = data.images[index];
+      lbImg.style.opacity = '1';
+    }, 150);
+    if (lbNum) lbNum.textContent = (index + 1) + ' / ' + data.images.length;
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   Room Gallery — Lightbox (Full-size image viewer)
+   ══════════════════════════════════════════════════════ */
+
+/** Currently active gallery ID for lightbox */
+window._lightboxGalleryId = null;
+
+/**
+ * Open lightbox for the given gallery
+ */
+function roomGalleryOpenLightbox(galleryId) {
+  var data = window.roomGalleryData && window.roomGalleryData[galleryId];
+  if (!data) return;
+  window._lightboxGalleryId = galleryId;
+
+  // Create lightbox if it doesn't exist
+  var lb = document.getElementById('room_lightbox');
+  if (!lb) {
+    lb = document.createElement('div');
+    lb.id = 'room_lightbox';
+    lb.className = 'room-lightbox';
+    lb.innerHTML =
+      '<div class="room-lightbox-backdrop" onclick="roomGalleryCloseLightbox()"></div>' +
+      '<div class="room-lightbox-content">' +
+        '<button type="button" class="room-lightbox-close" onclick="roomGalleryCloseLightbox()" title="Close">&times;</button>' +
+        '<button type="button" class="room-lightbox-prev" onclick="roomGalleryLightboxNav(-1)">&#10094;</button>' +
+        '<img id="room_lightbox_img" src="" alt="Full size">' +
+        '<button type="button" class="room-lightbox-next" onclick="roomGalleryLightboxNav(1)">&#10095;</button>' +
+        '<div class="room-lightbox-counter" id="room_lightbox_num"></div>' +
+      '</div>';
+    document.body.appendChild(lb);
+  }
+
+  // Set image
+  var lbImg = document.getElementById('room_lightbox_img');
+  var lbNum = document.getElementById('room_lightbox_num');
+  lbImg.src = data.images[data.current];
+  lbImg.style.opacity = '1';
+  lbNum.textContent = (data.current + 1) + ' / ' + data.images.length;
+
+  // Show
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+/**
+ * Close lightbox
+ */
+function roomGalleryCloseLightbox() {
+  var lb = document.getElementById('room_lightbox');
+  if (lb) {
+    lb.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  window._lightboxGalleryId = null;
+}
+
+/**
+ * Navigate lightbox prev/next
+ */
+function roomGalleryLightboxNav(direction) {
+  if (window._lightboxGalleryId) {
+    roomGalleryNav(window._lightboxGalleryId, direction);
+  }
+}
+
+// Keyboard navigation for lightbox
+document.addEventListener('keydown', function(e) {
+  if (!window._lightboxGalleryId) return;
+  if (e.key === 'Escape' || e.keyCode === 27) {
+    roomGalleryCloseLightbox();
+  } else if (e.key === 'ArrowLeft' || e.keyCode === 37) {
+    roomGalleryLightboxNav(-1);
+  } else if (e.key === 'ArrowRight' || e.keyCode === 39) {
+    roomGalleryLightboxNav(1);
+  }
+});
+
+/**
+ * Open lightbox for a single image (no gallery)
+ */
+function roomGalleryOpenSingle(imageUrl) {
+  // Create a temporary gallery data entry
+  window.roomGalleryData = window.roomGalleryData || {};
+  window.roomGalleryData['_single'] = {current: 0, images: [imageUrl]};
+  roomGalleryOpenLightbox('_single');
 }
 
 /* ══════════════════════════════════════════════════════
